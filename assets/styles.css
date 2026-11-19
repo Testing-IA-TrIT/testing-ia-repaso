@@ -37,7 +37,7 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; } /* clip: el fondo de la barra (100vw) no crea scroll horizontal */
 
 body {
   margin: 0;
@@ -97,11 +97,23 @@ site-header, site-footer { display: contents; }
   gap: 16px;
   font-size: 0.9rem;
   color: var(--muted);
-  /* fondo a todo el ancho de la ventana, aunque la barra esté dentro de .wrap */
-  background: var(--ab-glass);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 0 0 100vmax var(--ab-glass), 0 1px 0 100vmax var(--ab-glass-border);
-  clip-path: inset(0 -100vmax -1px);
+}
+/* Fondo de cristal a todo el ancho de la ventana, aunque la barra esté dentro de .wrap.
+   Un único pseudo-elemento: el desenfoque cubre todo el ancho (sin recorte en el centro). */
+.topbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(4, 7, 17, 0.55), rgba(4, 7, 17, 0.25));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  /* línea inferior suave que se desvanece hacia los lados */
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, var(--ab-glass-border) 20%, var(--ab-glass-border) 80%, transparent) 1;
 }
 .topbar a { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .topbar a:hover, .topbar a[aria-current="page"] { color: var(--text); }
