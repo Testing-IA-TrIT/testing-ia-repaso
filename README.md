@@ -1,6 +1,6 @@
 # Testing Inteligente · Material de repaso
 
-Páginas visuales para repasar el curso [Testing Inteligente](https://www.trainingit.es/producto/testing-ia/): glosario, buenas prácticas de Playwright y los procesos del curso (skills, specs y journeys).
+Páginas visuales para repasar el curso [Testing Inteligente](https://www.trainingit.es/producto/testing-ia/) en cuatro ejes: fundamentos (glosario), herramienta (playwright), proceso (skills) y artefactos (specs).
 
 Web publicada: <https://testing-ia-trit.github.io/testing-ia-repaso/>
 
@@ -11,11 +11,10 @@ Organización GitHub de Training IT para este curso: https://github.com/organiza
 | Página | Tema |
 | --- | --- |
 | `index.html` | Portada |
-| `glosario.html` | Conceptos del curso |
-| `practicas.html` | Buenas prácticas de Playwright |
-| `orquestaciones.html` | skills · Orquestaciones y skills primitivas |
-| `trazabilidad.html` | specs · De la spec a la prueba |
-| `journeys.html` | journeys · Recorridos de usuario |
+| `glosario.html` | Fundamentos · Conceptos del curso |
+| `playwright.html` | Herramienta · Buenas prácticas de Playwright |
+| `skills.html` | Proceso · Pipelines y skills primitivas |
+| `specs.html` | Artefactos · De la spec a la prueba, y journeys |
 
 Los estilos y los scripts están en `assets/`.
 

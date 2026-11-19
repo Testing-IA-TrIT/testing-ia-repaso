@@ -8,11 +8,10 @@
    para que funcione también abriendo los HTML con doble clic (file://). */
 
 const SITE_MENU = [
-  { href: "glosario.html", label: "Glosario" },
-  { href: "practicas.html", label: "Buenas prácticas" },
-  { href: "orquestaciones.html", label: "skills", mono: true },
-  { href: "trazabilidad.html", label: "specs", mono: true },
-  { href: "journeys.html", label: "journeys", mono: true },
+  { href: "glosario.html", label: "glosario", mono: true },
+  { href: "playwright.html", label: "playwright", mono: true },
+  { href: "skills.html", label: "skills", mono: true },
+  { href: "specs.html", label: "specs", mono: true },
 ];
 
 /** Nombre del archivo HTML actual; la raíz del sitio cuenta como index.html. */
@@ -44,12 +43,12 @@ class SiteFooter extends HTMLElement {
       <footer class="site-footer">
         <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
         <div class="f-links">
-          <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
+          <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/" target="_blank" rel="noopener">
             <span class="f-kind">El curso</span>
             <span class="f-title">Testing Inteligente en TrainingIT</span>
             <span class="f-url">trainingit.es/producto/testing-ia →</span>
           </a>
-          <a class="f-link f-author" href="https://albertobasalo.dev">
+          <a class="f-link f-author" href="https://albertobasalo.dev" target="_blank" rel="noopener">
             <span class="f-kind">El autor</span>
             <span class="f-title">Alberto Basalo</span>
             <span class="f-url">albertobasalo.dev →</span>

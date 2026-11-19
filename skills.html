@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Orquestaciones y skills primitivas · Testing Inteligente</title>
+  <title>skills · Testing Inteligente</title>
   <meta name="description" content="Repaso visual: qué hace cada pipeline, qué skills primitivas invoca y qué resultado aporta cada una.">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="stylesheet" href="assets/orquestaciones.css">
+  <link rel="stylesheet" href="assets/skills.css">
   <script src="assets/site.js"></script>
 </head>
 <body>
@@ -16,42 +16,42 @@
     <site-header></site-header>
 
     <header class="hero">
-      <span class="eyebrow">skills · Orquestaciones</span>
+      <span class="eyebrow">skills</span>
       <h1>Un equipo de tres pipelines</h1>
       <p class="lead">
-        Un pipeline es una skill que invoca otras skills en orden. Cada skill primitiva hace una sola tarea y entrega un resultado.
-        El pipeline para una vez, en el punto donde tú decides.
+        Un pipeline llama a otras skills en orden. Cada skill primitiva hace una tarea.
+        El pipeline para una vez, para que tú decidas.
       </p>
       <div class="legend">
         <span><i class="swatch"></i> Skill primitiva</span>
         <span><i class="swatch gate"></i> Pausa humana: apruebas o pides cambios</span>
-        <span><i class="swatch pipe"></i> Pipeline: invoca las primitivas en orden</span>
+        <span><i class="swatch pipe"></i> Pipeline: llama a las primitivas en orden</span>
       </div>
     </header>
 
     <section class="reveal">
       <h2>Dos tipos de skill</h2>
-      <p class="intro">Las dos son carpetas con un <code>SKILL.md</code>. Cambia lo que hacen: una ejecuta una tarea; la otra ordena tareas.</p>
+      <p class="intro">Las dos son carpetas con un <code>SKILL.md</code>. Una hace una tarea. La otra ordena tareas.</p>
       <div class="grid grid-2">
         <div class="card kind test">
           <span class="tag">verbo-objeto</span>
           <h3>Skill primitiva</h3>
-          <p>Hace una tarea y entrega un resultado que puedes revisar.</p>
+          <p>Hace una tarea y entrega un resultado revisable.</p>
           <ul>
-            <li>Una tarea en cada skill.</li>
-            <li>Se puede usar sola: <code>/define-test S1</code>.</li>
-            <li>Su resultado es la entrada de la siguiente.</li>
+            <li>Una tarea por skill.</li>
+            <li>Funciona sola: <code>/define-test S1</code>.</li>
+            <li>Su resultado alimenta a la siguiente.</li>
           </ul>
           <div class="mini"><b>define-test</b><i>→</i><b>.feature</b></div>
         </div>
         <div class="card kind spec">
           <span class="tag">objeto-rol</span>
           <h3>Pipeline</h3>
-          <p>Invoca las skills primitivas en orden y para cuando hace falta tu decisión.</p>
+          <p>Llama a las primitivas en orden. Para cuando necesita tu decisión.</p>
           <ul>
-            <li>Una sola pausa en cada pipeline.</li>
+            <li>Una pausa por pipeline.</li>
             <li>Empieza en una conversación nueva.</li>
-            <li>No añade reglas: las reglas están en las primitivas.</li>
+            <li>No añade reglas. Las reglas están en las primitivas.</li>
           </ul>
           <div class="mini"><b>define-test</b><i>→</i><b class="g">🧑</b><i>→</i><b>implement-test</b><i>→</i><b>fix-test</b></div>
         </div>
@@ -60,52 +60,15 @@
 
     <section>
       <h2 class="reveal">Los tres pipelines</h2>
-      <p class="intro reveal">Pulsa <b>▶ Ver el recorrido</b> para seguir el trabajo paso a paso. Pulsa una caja para ver su entrada, su tarea y su resultado.</p>
+      <p class="intro reveal">Pulsa <b>▶ Ver el recorrido</b> para verlo paso a paso. Pulsa una caja para ver su entrada, tarea y resultado.</p>
       <div id="pipelines"></div>
     </section>
 
     <section class="reveal">
       <h2>El hilo de los artefactos</h2>
-      <p class="intro">Cada pipeline deja archivos que el siguiente lee. Por eso un pipeline puede empezar en una conversación nueva: todo lo que necesita está en el repositorio.</p>
+      <p class="intro">Cada pipeline empieza en una conversación nueva y no recuerda nada. Solo lee los archivos que dejó el anterior. Este es el hilo, en orden: quién escribe cada archivo y quién lo usa después.</p>
       <div class="card">
-        <div class="thread">
-          <span class="artifact plain">petición</span><span class="arrow">→</span>
-          <span class="artifact spec">spec.md</span><span class="arrow">→</span>
-          <span class="artifact spec">código</span><span class="arrow">→</span>
-          <span class="artifact test">.feature</span><span class="arrow">→</span>
-          <span class="artifact test">.test.ts</span><span class="arrow">→</span>
-          <span class="artifact bugs">e2e-report.md</span><span class="arrow">→</span>
-          <span class="artifact bugs">fix.spec.md</span><span class="arrow">→</span>
-          <span class="artifact bugs">diff</span><span class="arrow">→</span>
-          <span class="artifact bugs">informe nuevo</span>
-        </div>
-        <div class="thread-legend">
-          <span class="spec">spec-builder</span>
-          <span class="test">test-builder</span>
-          <span class="bugs">bugs-hunter</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="reveal">
-      <h2>Tres reglas del reparto</h2>
-      <p class="intro">El reparto es por responsable: uno construye, otro prueba y otro juzga.</p>
-      <div class="grid grid-3">
-        <div class="card rule">
-          <span class="num">1</span>
-          <h3>Una pausa por pipeline</h3>
-          <p>El pipeline para donde se decide algo: la spec, los escenarios o el veredicto. Otra pausa solo repetiría la aprobación.</p>
-        </div>
-        <div class="card rule">
-          <span class="num">2</span>
-          <h3>Una conversación nueva</h3>
-          <p>Cada pipeline empieza sin el contexto del anterior, como otra persona del equipo. No hereda supuestos.</p>
-        </div>
-        <div class="card rule">
-          <span class="num">3</span>
-          <h3>Nadie se juzga a sí mismo</h3>
-          <p>El contexto que escribe el código no escribe sus pruebas. El contexto que escribe las pruebas no decide el veredicto.</p>
-        </div>
+        <div class="flow" id="flow"></div>
       </div>
     </section>
 
@@ -116,6 +79,6 @@
     <site-footer></site-footer>
   </div>
 
-  <script src="assets/orquestaciones.js"></script>
+  <script src="assets/skills.js"></script>
 </body>
 </html>

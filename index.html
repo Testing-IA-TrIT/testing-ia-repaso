@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Material de repaso · Testing Inteligente</title>
-  <meta name="description" content="Glosario, buenas prácticas de Playwright y páginas visuales para repasar los procesos del curso Testing Inteligente.">
+  <meta name="description" content="Repaso del curso Testing Inteligente en cuatro ejes: glosario, Playwright, skills y specs.">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
   <link rel="stylesheet" href="assets/styles.css">
@@ -16,71 +16,64 @@
     <site-header></site-header>
 
     <header class="hero">
-      <span class="eyebrow">Material de apoyo</span>
-      <h1>Repasa el curso</h1>
-      <p class="lead">Empieza por el glosario y las buenas prácticas de Playwright: son la referencia para escribir y revisar pruebas. Después, repasa los procesos del curso.</p>
+      <span class="eyebrow">Material de repaso</span>
+      <h1>Testing IA con Playwright</h1>
+      <p class="lead">Cuatro ejes: los conceptos, la herramienta, el proceso y los artefactos.</p>
     </header>
 
     <section>
-      <h2 class="section-title">Referencia <small>· para consultar siempre</small></h2>
-      <p class="section-intro">Los términos del curso y las reglas de una buena prueba. Pulsa un término o una práctica para ir directamente a ella.</p>
-      <div class="ref-grid">
+      <div class="axes">
         <article class="card ref r-glossary">
-          <span class="kind">Glosario</span>
-          <h2><a href="glosario.html">Los conceptos del curso</a></h2>
-          <p>Spec, historia, requisito, escenario, test, suite y el resto de términos, con sus códigos y sus relaciones.</p>
+          <span class="kind">Fundamentos</span>
+          <h2><a href="glosario.html">glosario</a></h2>
+          <p>Cada término del curso, con su código y sus relaciones.</p>
           <div class="chips">
             <a href="glosario.html#spec"><code>S1</code>Spec</a>
             <a href="glosario.html#story"><code>US1</code>Historia</a>
             <a href="glosario.html#req"><code>R1</code>Requisito</a>
             <a href="glosario.html#scenario">Escenario</a>
             <a href="glosario.html#tag"><code>@S1-R1</code>Etiqueta</a>
-            <a href="glosario.html#locator">Localizador</a>
-            <a href="glosario.html#assertion">Aserción</a>
-            <a href="glosario.html#po">Page Object</a>
             <a href="glosario.html#triage">Triage</a>
           </div>
-          <span class="go">Abrir el glosario →</span>
+          <span class="go">Abrir →</span>
         </article>
-        <article class="card ref r-practices">
-          <span class="kind">Buenas prácticas de Playwright</span>
-          <h2><a href="practicas.html">Una prueba que puedes creer</a></h2>
-          <p>Una prueba anotada, ejemplos malos y buenos uno junto al otro, errores típicos de un agente y una lista para revisar.</p>
-          <div class="chips">
-            <a href="practicas.html#locators"><code>E2</code>Localiza como el usuario</a>
-            <a href="practicas.html#web-first"><code>E3</code>Aserciones que reintentan</a>
-            <a href="practicas.html#await"><code>E4</code>await en cada paso</a>
-            <a href="practicas.html#page-objects"><code>E6</code>Page Objects</a>
-            <a href="practicas.html#independent"><code>E7</code>Pruebas independientes</a>
-            <a href="practicas.html#evidence">Evidencias</a>
-          </div>
-          <span class="go">Abrir las buenas prácticas →</span>
-        </article>
-      </div>
-    </section>
 
-    <section>
-      <h2 class="section-title">Procesos <small>· cómo se trabaja con los agentes</small></h2>
-      <p class="section-intro">Tres páginas visuales: cómo trabajan las skills, cómo llega un requisito a su prueba y cómo se prueba un recorrido completo.</p>
-      <div class="grid grid-3">
-        <a class="card topic t-skills" href="orquestaciones.html">
-          <span class="tag">skills</span>
-          <h3>Orquestaciones y skills primitivas</h3>
-          <p>Qué tarea hace cada pipeline, qué skills invoca y qué resultado aporta cada una.</p>
+        <article class="card ref r-playwright">
+          <span class="kind">Herramienta</span>
+          <h2><a href="playwright.html">playwright</a></h2>
+          <p>Pruebas fiables: una prueba anotada, ejemplos buenos y malos, errores típicos de un agente y una lista de revisión.</p>
+          <div class="chips">
+            <a href="playwright.html#locators"><code>E2</code>Localiza como el usuario</a>
+            <a href="playwright.html#web-first"><code>E3</code>Aserciones que reintentan</a>
+            <a href="playwright.html#page-objects"><code>E6</code>Page Objects</a>
+            <a href="playwright.html#independent"><code>E7</code>Pruebas independientes</a>
+            <a href="playwright.html#evidence">Evidencias</a>
+          </div>
           <span class="go">Abrir →</span>
-        </a>
-        <a class="card topic t-specs" href="trazabilidad.html">
-          <span class="tag">specs</span>
-          <h3>De la spec a la prueba</h3>
-          <p>Cómo se organizan historias y requisitos, y cómo llega un requisito a su escenario y a su prueba.</p>
+        </article>
+
+        <article class="card ref r-skills">
+          <span class="kind">Proceso</span>
+          <h2><a href="skills.html">skills</a></h2>
+          <p>Tres pipelines y sus skills primitivas: qué hace cada una, dónde decides tú y qué archivos se pasan.</p>
+          <div class="chips">
+            <a href="skills.html#spec-builder"><code>/</code>spec-builder</a>
+            <a href="skills.html#test-builder"><code>/</code>test-builder</a>
+            <a href="skills.html#bugs-hunter"><code>/</code>bugs-hunter</a>
+          </div>
           <span class="go">Abrir →</span>
-        </a>
-        <a class="card topic t-journeys" href="journeys.html">
-          <span class="tag">journeys</span>
-          <h3>Journeys</h3>
-          <p>Un recorrido de usuario paso a paso: qué cubren las pruebas y dónde se comprueba el resultado.</p>
+        </article>
+
+        <article class="card ref r-specs">
+          <span class="kind">Artefactos</span>
+          <h2><a href="specs.html">specs</a></h2>
+          <p>De la spec a la prueba, y vuelta: historias, requisitos, escenarios y tests con el mismo código. También los journeys.</p>
+          <div class="chips">
+            <a href="specs.html"><code>R1</code>→ <code>[R1]</code>→ <code>@S1-R1</code></a>
+            <a href="specs.html#journeys"><code>J1</code>Journeys</a>
+          </div>
           <span class="go">Abrir →</span>
-        </a>
+        </article>
       </div>
     </section>
 

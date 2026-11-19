@@ -10,7 +10,7 @@ const GROUPS = {
 
 const PRACTICES = [
   { id: "locators", group: "localizar", title: "Localiza como el usuario", glossary: "locator",
-    why: "El usuario encuentra un botón por su texto y su función, no por su clase CSS. Una prueba que hace lo mismo sobrevive a los cambios de diseño y comprueba que la página es accesible.",
+    why: "El usuario encuentra un botón por su texto y su función, no por su clase CSS. Si la prueba hace lo mismo, resiste los cambios de diseño y comprueba la accesibilidad.",
     rule: "Orden: getByRole → getByLabel → getByText → getByTestId, solo si el atributo ya existe.",
     bad: "// depende de la estructura del HTML\nawait page.locator('form > div:nth-child(3) button.btn-primary').click();",
     good: "// rol y nombre accesible\nawait page.getByRole('button', { name: 'Save' }).click();" },
@@ -22,7 +22,7 @@ const PRACTICES = [
     good: "await launches.scheduleLaunch(launch);\nawait expect(launches.rowFor(launch.name))\n  .toContainText('Scheduled');" },
 
   { id: "web-first", group: "comprobar", title: "Usa aserciones que reintentan", glossary: "assertion",
-    why: "Una aserción web-first espera a que el resultado aparezca. Una espera fija es lenta cuando sobra tiempo y falla cuando falta.",
+    why: "Una aserción web-first espera al resultado. Una espera fija sobra o se queda corta.",
     rule: "Usa await expect(locator).toBe…(). No uses waitForTimeout.",
     bad: "await page.waitForTimeout(2000);\nexpect(await page.getByText('Saved').isVisible()).toBe(true);",
     good: "// reintenta hasta que el texto aparece\nawait expect(page.getByText('Saved')).toBeVisible();" },
@@ -34,56 +34,56 @@ const PRACTICES = [
     good: "await page.getByRole('button', { name: 'Save' }).click();\nawait expect(page.getByText('Saved')).toBeVisible();" },
 
   { id: "strong", group: "comprobar", title: "No debilites una aserción para que pase",
-    why: "Si la prueba falla, puede fallar la aplicación. Cambiar el esperado oculta el defecto. El esperado sale del requisito, no de lo que hace hoy la aplicación.",
+    why: "Si la prueba falla, quizá falla la aplicación. Cambiar el esperado oculta el defecto. El esperado sale del requisito, no de la aplicación.",
     rule: "Si una aserción falla, haz triage. No la cambies por una más débil.",
     bad: "// antes: toHaveText('5 seats available')\nawait expect(launches.seats).toBeVisible();",
     good: "// el esperado sale del requisito\nawait expect(launches.seats).toHaveText('5 seats available');" },
 
   { id: "trace", group: "organizar", title: "Traza cada prueba a su requisito", glossary: "trace",
-    why: "Cuando una prueba falla, llegas al requisito que no se cumple. Cuando cambia un requisito, llegas a su prueba. La redundancia en carpetas, títulos y etiquetas es buena.",
+    why: "Si una prueba falla, llegas a su requisito. Si cambia un requisito, llegas a su prueba. Repetir el código en carpetas, títulos y etiquetas ayuda.",
     rule: "Un archivo por historia, un test.describe por historia y un test por escenario, con sus códigos y etiquetas.",
     bad: "test('schedule launch works', async ({ page }) => { … });",
     good: "test.describe('[US1] Schedule a launch', { tag: ['@S1', '@S1-US1'] }, () => {\n  test('[R1] Schedule a valid launch', { tag: '@S1-R1' }, async ({ page }) => { … });\n});" },
 
   { id: "page-objects", group: "organizar", title: "Usa Page Objects", glossary: "po",
-    why: "Si cambia un campo, lo corriges en un solo lugar. La prueba muestra la acción del usuario y el resultado, no los detalles de la interfaz.",
-    rule: "Una clase por página, métodos con nombre de acción y datos como parámetros. Los expect se quedan en la prueba.",
+    why: "Si cambia un campo, lo corriges en un solo sitio. La prueba muestra la acción y el resultado, no la interfaz.",
+    rule: "Una clase por página. Métodos con nombre de acción y datos como parámetros. Los expect, en la prueba.",
     bad: "await page.getByLabel('Rocket').selectOption(rocketName);\nawait page.getByLabel('Date').fill(date);\nawait page.getByRole('button', { name: 'Schedule' }).click();",
     good: "await launches.scheduleLaunch({ rocketName, date });\nawait expect(launches.rowFor(rocketName)).toBeVisible();" },
 
   { id: "steps", group: "organizar", title: "Nombra los pasos de un recorrido largo", glossary: "step",
-    why: "En un journey, el informe dice qué paso falla. El código del paso es una pista para el triage.",
-    rule: "Un test.step por paso. Su título cita el criterio y el paso termina con un expect.",
+    why: "En un journey, el informe dice qué paso falla. Su código orienta el triage.",
+    rule: "Un test.step por paso. Su título cita el criterio. Termina con un expect.",
     bad: "test('operator journey', async ({ page }) => {\n  // 40 líneas sin pasos\n});",
     good: "await test.step('[S3-R1] Add a rocket', async () => {\n  await rockets.add(rocket);\n  await expect(rockets.rowFor(rocket.name)).toBeVisible();\n});" },
 
   { id: "data", group: "datos", title: "Separa los datos de prueba", glossary: "data",
-    why: "Un valor con nombre explica su función. Una función que devuelve un objeto nuevo da datos limpios a cada prueba.",
-    rule: "Datos en su carpeta, funciones que devuelven objetos nuevos y los datos previos en la semilla.",
+    why: "Un valor con nombre explica su función. Una función que crea un objeto nuevo da datos limpios a cada prueba.",
+    rule: "Datos en su carpeta. Funciones que devuelven objetos nuevos. Datos previos en la semilla.",
     bad: "await launches.scheduleLaunch({ rocketName: 'Falcon', date: '2027-01-01' });",
     good: "const launch = createLaunchData();\nawait launches.scheduleLaunch(launch);" },
 
   { id: "independent", group: "datos", title: "Haz pruebas independientes",
-    why: "Una prueba que depende de otra falla cuando cambia el orden o cuando se ejecuta sola.",
-    rule: "Cada prueba crea sus datos con valores únicos. No depende del orden ni de otra prueba.",
+    why: "Si depende de otra, falla al cambiar el orden o al ejecutarla sola.",
+    rule: "Cada prueba crea sus datos, con valores únicos.",
     bad: "// el email ya existe en la segunda ejecución\nconst email = 'test@example.com';",
     good: "// un valor único en cada ejecución\nconst email = `user-${Date.now()}@example.com`;" },
 
   { id: "session", group: "datos", title: "Entra una vez y reutiliza la sesión", glossary: "session",
-    why: "Pasar por el formulario de login en cada prueba es lento y repite lo mismo. La sesión guardada contiene las cookies y el localStorage que crea la web.",
+    why: "Hacer login en cada prueba es lento y repetitivo. La sesión guardada tiene las cookies y el localStorage de la web.",
     rule: "Guarda la sesión que crea la web. No la fabriques con el token de la API. Un journey empieza sin sesión.",
     bad: "test.beforeEach(async ({ page }) => {\n  await loginPage.login(operator); // en cada prueba\n});",
     good: "// playwright.config.ts: la sesión que guardó el setup al entrar por la web\nuse: { storageState: '.auth/operator.json' }" },
 
   { id: "evidence", group: "ejecutar", title: "Guarda evidencias de los fallos", glossary: "report",
-    why: "Sin evidencias, el triage adivina. La traza, la captura y el mensaje de error muestran qué vio el navegador.",
-    rule: "Activa la traza y las capturas cuando una prueba falla. Lee la evidencia antes de cambiar nada.",
+    why: "Sin evidencias, el triage adivina. La traza, la captura y el error muestran qué vio el navegador.",
+    rule: "Guarda traza y capturas de cada fallo. Léelas antes de cambiar nada.",
     bad: "// sin evidencias: solo el mensaje de error\nuse: { trace: 'off', screenshot: 'off' }",
     good: "use: {\n  trace: 'retain-on-failure',\n  screenshot: 'only-on-failure',\n  video: 'retain-on-failure',\n}\n// npx playwright show-trace <trace.zip>" },
 
   { id: "run", group: "ejecutar", title: "Ejecuta lo que cambias y después toda la suite", glossary: "suite",
-    why: "Ejecutar un requisito da una respuesta rápida. Ejecutar toda la suite descubre regresiones en otras specs.",
-    rule: "Primero --grep con la etiqueta. Antes de aceptar el cambio, toda la suite.",
+    why: "Un requisito da una respuesta rápida. Toda la suite encuentra regresiones en otras specs.",
+    rule: "Primero, --grep con la etiqueta. Antes de aceptar, toda la suite.",
     bad: "# solo la prueba nueva, y se da por terminado\nnpx playwright test --grep '@S1-R1'",
     good: "npx playwright test --grep '@S1-R1'   # rápido\nnpm run test:e2e                       # toda la suite" },
 ];
@@ -108,7 +108,7 @@ const CHECKLIST = [
   ["E4", "Cada acción y cada expect tienen await."],
   ["E3.4", "No hay waitForTimeout ni esperas fijas."],
   ["E3.1 · E3.3", "Cada test comprueba el resultado que pide su requisito, no solo la URL."],
-  ["E7.5", "Los esperados salen del requisito. Ninguno se ha debilitado para que la prueba pase."],
+  ["E7.5", "Los esperados salen del requisito. Ninguno se ha debilitado."],
   ["E6", "Las acciones están en Page Objects; los expect, en la prueba."],
   ["E7.4", "Los datos son únicos y no dependen de otra prueba."],
   ["", "La prueba pasa sola y pasa con toda la suite."],
@@ -210,7 +210,7 @@ renderChecklist();
 // Animación de entrada al hacer scroll (assets/site.js)
 revealOnScroll();
 
-// Enlaces directos (practicas.html#locators): las prácticas se crean con JS, así que el salto se hace aquí.
+// Enlaces directos (playwright.html#locators): las prácticas se crean con JS, así que el salto se hace aquí.
 if (location.hash) {
   const target = document.getElementById(location.hash.slice(1));
   if (target) {

@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Buenas prácticas de Playwright · Testing Inteligente</title>
-  <meta name="description" content="Resumen visual de buenas prácticas de Playwright: localizar, comprobar, organizar, datos y diagnóstico, con ejemplos malos y buenos.">
+  <title>playwright · Testing Inteligente</title>
+  <meta name="description" content="Buenas prácticas de Playwright: localizar, comprobar, organizar, datos y diagnóstico, con ejemplos buenos y malos.">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="stylesheet" href="assets/practicas.css">
+  <link rel="stylesheet" href="assets/playwright.css">
   <script src="assets/site.js"></script>
 </head>
 <body>
@@ -16,17 +16,17 @@
     <site-header></site-header>
 
     <header class="hero">
-      <span class="eyebrow">Buenas prácticas</span>
-      <h1>Una prueba que puedes creer</h1>
+      <span class="eyebrow">playwright</span>
+      <h1>Pruebas fiables</h1>
       <p class="lead">
-        Una prueba en verde no basta. Debe comprobar el requisito, encontrar los elementos como el usuario y no depender de otras pruebas.
-        Estas prácticas te sirven para escribir pruebas y para revisar las que genera un agente.
+        Que una prueba pase no basta. Debe comprobar el requisito, buscar los elementos como el usuario y no depender de otras pruebas.
+        Usa estas prácticas para escribir pruebas y para revisar las de un agente.
       </p>
     </header>
 
     <section class="reveal">
       <h2>Anatomía de una buena prueba</h2>
-      <p class="intro">Pasa el ratón por un número para ver dónde aplica cada práctica. Púlsalo para ir a su explicación.</p>
+      <p class="intro">Pasa el ratón por un número para ver dónde aplica cada práctica. Púlsalo para ir a ella.</p>
       <div class="anatomy-wrap">
         <div class="card anatomy">
           <div class="file-name">e2e/tests/S1-schedule-launch/US1-schedule-a-launch.test.ts</div>
@@ -46,27 +46,27 @@
 
     <section>
       <h2 class="reveal">Las prácticas</h2>
-      <p class="intro reveal">Cada práctica explica por qué importa y da una regla. Debajo, compara el código <b>✗ Mal</b> con el código <b>✓ Bien</b>.</p>
-      <p class="codes-note reveal">Los códigos <code>E1</code>…<code>E8</code> son los de las reglas e2e del proyecto, en <code>.agents/skills/implement-test/references/e2e-rules.md</code>. Las skills <code>define-test</code>, <code>implement-test</code> y <code>fix-test</code> los citan. Las prácticas sin código son de configuración y de ejecución.</p>
+      <p class="intro reveal">Cada práctica tiene un motivo, una regla y un ejemplo <b>✗ Mal</b> / <b>✓ Bien</b>.</p>
+      <p class="codes-note reveal">Los códigos <code>E1</code>…<code>E8</code> son las reglas e2e del proyecto (<code>.agents/skills/implement-test/references/e2e-rules.md</code>). Las citan <code>define-test</code>, <code>implement-test</code> y <code>fix-test</code>. Las prácticas sin código son de configuración y ejecución.</p>
       <div id="practices"></div>
     </section>
 
     <section class="reveal">
       <h2>Errores típicos de un agente</h2>
-      <p class="intro">Un agente genera pruebas que pasan. Revisa estos puntos antes de aceptar su trabajo.</p>
+      <p class="intro">Las pruebas de un agente pasan, pero pueden tener estos fallos. Revísalos antes de aceptarlas.</p>
       <div class="traps">
-        <div class="trap"><b>Espera fija para que pase</b><span>Añade waitForTimeout cuando la prueba falla de forma intermitente.</span><br><a href="#web-first">Aserciones que reintentan →</a></div>
-        <div class="trap"><b>Selector CSS copiado del DOM</b><span>Usa la clase o la posición del elemento en vez de su rol.</span><br><a href="#locators">Localizar como el usuario →</a></div>
-        <div class="trap"><b>Esperado copiado de la aplicación</b><span>Escribe lo que la web muestra hoy, no lo que pide el requisito.</span><br><a href="#strong">No debilitar aserciones →</a></div>
+        <div class="trap"><b>Espera fija para que pase</b><span>Añade waitForTimeout si la prueba falla a veces.</span><br><a href="#web-first">Aserciones que reintentan →</a></div>
+        <div class="trap"><b>Selector CSS copiado del DOM</b><span>Usa la clase o la posición, no el rol.</span><br><a href="#locators">Localizar como el usuario →</a></div>
+        <div class="trap"><b>Esperado copiado de la aplicación</b><span>Comprueba lo que la web muestra hoy, no lo que pide el requisito.</span><br><a href="#strong">No debilitar aserciones →</a></div>
         <div class="trap"><b>Solo comprueba la URL</b><span>La navegación funciona, pero el dato no aparece.</span><br><a href="#observable">Comprobar lo que ve el usuario →</a></div>
         <div class="trap"><b>Prueba que depende de otra</b><span>Usa un dato que creó la prueba anterior.</span><br><a href="#independent">Pruebas independientes →</a></div>
-        <div class="trap"><b>Prueba sin requisito</b><span>Añade escenarios que ninguna spec pide, o un título sin código.</span><br><a href="#trace">Trazar al requisito →</a></div>
+        <div class="trap"><b>Prueba sin requisito</b><span>Escenarios que ninguna spec pide, o títulos sin código.</span><br><a href="#trace">Trazar al requisito →</a></div>
       </div>
     </section>
 
     <section class="reveal">
       <h2>Antes de aceptar una prueba</h2>
-      <p class="intro">Usa esta lista al revisar una prueba tuya o de un agente. Marca cada punto comprobado.</p>
+      <p class="intro">Para revisar una prueba, tuya o de un agente. Marca cada punto.</p>
       <div class="card check-card">
         <div class="progress"><span id="progress"></span></div>
         <div class="progress-row"><span id="progress-label" aria-live="polite"></span><button type="button" id="reset-check">Vaciar</button></div>
@@ -75,7 +75,7 @@
     </section>
 
     <section class="reveal">
-      <blockquote class="quote">Una prueba que pasa no cumple necesariamente las prácticas. Una prueba que cumple las prácticas puede comprobar el resultado incorrecto. Revisa también el requisito.</blockquote>
+      <blockquote class="quote">Pasar no es cumplir las prácticas. Cumplirlas no garantiza comprobar lo correcto. Revisa también el requisito.</blockquote>
       <p class="intro" style="margin-top:20px">
         Documentación oficial: <a href="https://playwright.dev/docs/best-practices">Best practices</a> ·
         <a href="https://playwright.dev/docs/locators">Locators</a> ·
@@ -89,6 +89,6 @@
     <site-footer></site-footer>
   </div>
 
-  <script src="assets/practicas.js"></script>
+  <script src="assets/playwright.js"></script>
 </body>
 </html>

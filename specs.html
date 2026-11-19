@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>De la spec a la prueba · Testing Inteligente</title>
-  <meta name="description" content="Repaso visual: cómo se organizan historias y requisitos en una spec, y cómo llega cada requisito a su escenario y a su prueba.">
+  <title>specs · Testing Inteligente</title>
+  <meta name="description" content="De la spec a la prueba: historias, requisitos, escenarios y tests con el mismo código. Incluye los journeys que cruzan varias specs.">
   <link rel="icon" type="image/png" href="assets/logo.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="stylesheet" href="assets/trazabilidad.css">
+  <link rel="stylesheet" href="assets/specs.css">
   <script src="assets/site.js"></script>
 </head>
 <body>
@@ -16,17 +16,18 @@
     <site-header></site-header>
 
     <header class="hero">
-      <span class="eyebrow">specs · Trazabilidad</span>
+      <span class="eyebrow">specs</span>
       <h1>Del requisito a la prueba, y vuelta</h1>
       <p class="lead">
-        Desde un requisito, llegas a su prueba. Desde una prueba que falla, llegas al requisito que no se cumple.
-        El camino es corto porque todos los niveles usan el mismo código.
+        De un requisito llegas a su prueba. De un fallo llegas a su requisito.
+        Es fácil porque todos los niveles usan el mismo código.
       </p>
+      <p class="jump-link">¿El objetivo cruza varias specs? <a href="#journeys">→ Journeys</a></p>
     </header>
 
     <section class="reveal">
       <h2>Dos niveles, los mismos códigos</h2>
-      <p class="intro">La spec dice <b>qué</b> debe hacer la aplicación. Las pruebas dicen <b>cómo</b> se comprueba. Las pruebas repiten los códigos del análisis y no crean códigos nuevos.</p>
+      <p class="intro">La spec dice <b>qué</b> hace la aplicación. Las pruebas dicen <b>cómo</b> se comprueba. Las pruebas repiten los códigos del análisis. No crean códigos nuevos.</p>
       <div class="grid grid-2 levels">
         <div class="card level lvl-spec">
           <span class="folder">specs/S1-schedule-launch/</span>
@@ -54,7 +55,7 @@
 
     <section class="reveal">
       <h2>El mapa de una spec</h2>
-      <p class="intro">Una spec de ejemplo con dos historias y cinco requisitos. Pasa el ratón por cualquier elemento: se ilumina su camino en los tres archivos. El panel de abajo dice cómo ejecutar ese nivel.</p>
+      <p class="intro">Una spec de ejemplo: dos historias y cinco requisitos. Pasa el ratón por un elemento para ver su camino en los tres archivos. Debajo verás cómo ejecutarlo.</p>
       <div class="map-tools">
         <button class="btn" id="all-btn" type="button">Ver toda la spec</button>
         <button class="btn fail" id="fail-btn" type="button" aria-pressed="false">✗ Simular un fallo</button>
@@ -66,7 +67,7 @@
 
     <section class="reveal">
       <h2>Seguir la traza</h2>
-      <p class="intro">Hay dos direcciones. Las dos usan solo el código y una búsqueda.</p>
+      <p class="intro">En los dos sentidos basta con el código y una búsqueda.</p>
       <div class="grid grid-2">
         <div class="card steps-card lvl-spec">
           <span class="dir">spec → prueba</span>
@@ -110,22 +111,96 @@
       <div class="grid grid-2">
         <div class="card">
           <h3>Contexto, no pruebas</h3>
-          <p>El problema, las reglas, la solución y lo que queda fuera de alcance no tienen código. No generan una prueba. Si una regla se debe comprobar, escríbela también como requisito EARS.</p>
+          <p>El problema, las reglas, la solución y lo que queda fuera no tienen código. No generan pruebas. Para probar una regla, escríbela también como requisito EARS.</p>
         </div>
         <div class="card">
           <h3>Un nombre para cada cosa</h3>
-          <p>«Spec» es la especificación funcional, en <code>spec.md</code>. Un archivo <code>.test.ts</code> es el código que comprueba una historia. Por eso las pruebas no usan el sufijo <code>.spec.ts</code>.</p>
+          <p>«Spec» es la especificación funcional: <code>spec.md</code>. Un <code>.test.ts</code> prueba una historia. Por eso las pruebas no usan <code>.spec.ts</code>.</p>
         </div>
       </div>
     </section>
 
+    <section id="journeys" class="journeys">
+      <span class="eyebrow">journeys</span>
+      <h2>Journeys: cuando el objetivo cruza varias specs</h2>
+      <p class="intro">
+        Las specs prueban que cada pieza funciona. Un journey prueba que el usuario llega a su objetivo.
+        No es una spec: no tiene <code>spec.md</code> ni reglas propias. Cada paso cita un criterio que ya existe.
+      </p>
+
+      <div class="vs reveal">
+        <div class="card piece">
+          <h3>Prueba de spec</h3>
+          <p>Comprueba una pieza de la aplicación.</p>
+          <dl>
+            <dt>Pregunta</dt><dd>¿Se cumple la regla?</dd>
+            <dt>Sesión</dt><dd>Guardada: empieza ya dentro</dd>
+            <dt>Datos</dt><dd>La prueba los prepara</dd>
+            <dt>Comprueba</dt><dd>Cada criterio de una spec</dd>
+          </dl>
+        </div>
+        <div class="card path">
+          <h3>Journey</h3>
+          <p>Recorre el camino completo de un usuario.</p>
+          <dl>
+            <dt>Pregunta</dt><dd>¿El usuario consigue su objetivo?</dd>
+            <dt>Sesión</dt><dd>Ninguna: entra por la UI</dd>
+            <dt>Datos</dt><dd>El usuario los crea</dd>
+            <dt>Comprueba</dt><dd>Un resultado al final de cada paso</dd>
+          </dl>
+        </div>
+      </div>
+
+      <h3 class="sub-title reveal">El journey <code>J1</code> paso a paso</h3>
+      <p class="intro reveal">
+        El operador entra, añade un cohete y programa un lanzamiento con él. Al final, lo ve en la lista.
+        Cada parada es un paso. Arriba, la acción. Abajo, la comprobación ◆.
+      </p>
+      <div class="reveal">
+        <div class="tools">
+          <button class="btn" id="run-btn" type="button">▶ Recorrer el journey</button>
+          <button class="btn bug" id="bug-btn" type="button" aria-pressed="false">✗ Aplicar el cambio del compañero</button>
+          <span class="status" id="status" aria-live="polite"></span>
+        </div>
+        <div class="board" id="board" aria-label="Estado de la suite"></div>
+        <div class="card">
+          <div class="ends">
+            <span>Empieza: <b>el operador, sin sesión</b></span>
+            <span>Objetivo: <b>los pasajeros pueden reservar</b></span>
+          </div>
+          <div class="metro" id="metro"></div>
+          <div class="lines">
+            <span style="--c: var(--s-access)"><i></i>S2 · Acceso</span>
+            <span style="--c: var(--s-rockets)"><i></i>S3 · Cohetes</span>
+            <span style="--c: var(--s-launches)"><i></i>S1 · Lanzamientos</span>
+            <span style="--c: var(--s-list)"><i></i>S4 · Lista de lanzamientos</span>
+          </div>
+        </div>
+        <div class="j-panel" id="j-panel" aria-live="polite"></div>
+      </div>
+
+      <h3 class="sub-title reveal">Las reglas de un journey</h3>
+      <div class="card reveal">
+        <ul class="j-rules">
+          <li><b>No añade reglas</b> <code class="rc">E1.5</code> Cada paso cita un criterio que existe, como <code>S3-R1</code>. Si falta, el agente para y propone una spec nueva.</li>
+          <li><b>Solo la UI</b> <code class="rc">E8.5</code> Acciones y comprobaciones, siempre por la interfaz. Sin API ni respuestas de red.</li>
+          <li><b>Empieza sin sesión</b> <code class="rc">E8.9</code> Entrar es el primer paso. <code>storageState</code> vacío.</li>
+          <li><b>Datos únicos</b> <code class="rc">E8.8</code> El usuario crea sus datos. La semilla solo da la cuenta del actor.</li>
+          <li><b>Un resultado por paso</b> <code class="rc">E8.4 · E8.7</code> Un <code>test.step</code> por paso, que termina con un <code>expect</code>. Pocos escenarios, no uno por criterio.</li>
+          <li><b>Sus archivos</b> Un <code>specs/J1-&lt;slug&gt;/J1-&lt;slug&gt;.feature</code> y un <code>e2e/tests/J1-&lt;slug&gt;/J1-&lt;slug&gt;.test.ts</code>, con etiquetas <code>@journey @J1</code>.</li>
+          <li><b>Las mismas skills</b> <code>define-test</code> tiene un modo journey para los códigos <code>J</code>. Usas <a href="skills.html"><code>/test-builder</code> y <code>/bugs-hunter</code></a>.</li>
+        </ul>
+      </div>
+      <p class="intro reveal j-think">Si las specs pasan y el journey falla, el fallo suele estar entre dos specs.</p>
+    </section>
+
     <section class="reveal">
-      <blockquote class="quote">Un código, tres archivos. Si una prueba no cita su requisito, no puedes saber qué comprueba.</blockquote>
+      <blockquote class="quote">Un código, tres archivos. Si una prueba no cita su requisito, no sabes qué comprueba.</blockquote>
     </section>
 
     <site-footer></site-footer>
   </div>
 
-  <script src="assets/trazabilidad.js"></script>
+  <script src="assets/specs.js"></script>
 </body>
 </html>
