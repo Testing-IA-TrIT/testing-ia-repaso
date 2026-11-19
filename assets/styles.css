@@ -1,9 +1,12 @@
 /* Material de repaso · Testing Inteligente
-   Estilo común para todas las páginas. */
+   Estilo común para todas las páginas.
+   Tipografía y fondo alineados con albertobasalo.dev (tema oscuro). */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Audiowide&family=JetBrains+Mono:wght@400;500;700&display=swap");
 
 :root {
-  --bg: #0a0f1f;
-  --bg-2: #111833;
+  --bg: #040711;
+  --bg-2: #111a31;
   --panel: rgba(255, 255, 255, 0.04);
   --line: rgba(255, 255, 255, 0.12);
   --text: #e8ecf8;
@@ -14,8 +17,15 @@
   --gate: #fb7185;   /* pausa humana */
   --ok: #4ade80;
   --radius: 18px;
-  --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, monospace;
-  --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --sans: "Roboto", system-ui, "Segoe UI", sans-serif;
+  --display: "Audiowide", "Roboto", sans-serif;
+  /* Fondo "mesh" de albertobasalo.dev */
+  --mesh-dark:
+    radial-gradient(circle at 12% 15%, #3b82f63d, transparent 45%),
+    radial-gradient(circle at 88% 12%, #22c55e2e, transparent 45%),
+    radial-gradient(circle at 50% 100%, #3b82f61f, transparent 55%),
+    linear-gradient(180deg, #040711 0%, #090f1f 45%, #111a31 100%);
 }
 
 * { box-sizing: border-box; }
@@ -27,18 +37,28 @@ body {
   font-family: var(--sans);
   color: var(--text);
   line-height: 1.6;
-  background:
-    radial-gradient(1px 1px at 12% 18%, #fff8 50%, transparent 51%),
-    radial-gradient(1px 1px at 72% 9%, #fff6 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 38% 64%, #fff5 50%, transparent 51%),
-    radial-gradient(1px 1px at 88% 52%, #fff7 50%, transparent 51%),
-    radial-gradient(1px 1px at 22% 86%, #fff5 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 58% 32%, #fff4 50%, transparent 51%),
-    radial-gradient(1200px 600px at 85% -10%, #2a1f5c 0%, transparent 60%),
-    radial-gradient(900px 500px at -10% 30%, #0f3a4a 0%, transparent 60%),
-    var(--bg);
+  -webkit-font-smoothing: antialiased;
+  background: var(--mesh-dark), var(--bg);
   background-attachment: fixed;
   min-height: 100vh;
+}
+
+/* Grano de ruido muy suave sobre todo el fondo */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox=%270 0 200 200%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.65%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27/%3E%3C/svg%3E");
+}
+
+/* Títulos con la fuente display */
+h1, h2, h3, h4, .brand, .f-title {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 a { color: var(--test); }
@@ -67,14 +87,14 @@ code {
   font-size: 0.9rem;
   color: var(--muted);
   /* fondo a todo el ancho de la ventana, aunque la barra esté dentro de .wrap */
-  background: rgba(10, 15, 31, 0.86);
+  background: rgba(4, 7, 17, 0.86);
   backdrop-filter: blur(10px);
-  box-shadow: 0 0 0 100vmax rgba(10, 15, 31, 0.86), 0 1px 0 100vmax var(--line);
+  box-shadow: 0 0 0 100vmax rgba(4, 7, 17, 0.86), 0 1px 0 100vmax var(--line);
   clip-path: inset(0 -100vmax -1px);
 }
 .topbar a { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .topbar a:hover, .topbar a[aria-current="page"] { color: var(--text); }
-.brand { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.brand { letter-spacing: 0.04em; text-transform: uppercase; }
 .menu { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
 .menu a { padding: 4px 10px; border-radius: 999px; }
 .menu a:hover { background: var(--panel); }
@@ -168,7 +188,7 @@ footer {
 .f-course { --accent: var(--test); }
 .f-author { --accent: var(--spec); }
 .f-kind { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
-.f-title { font-size: 1.2rem; font-weight: 700; }
+.f-title { font-size: 1.2rem; }
 .f-url { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); }
 
 /* Animación de entrada */

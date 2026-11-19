@@ -4,6 +4,8 @@ Páginas visuales para repasar el curso [Testing Inteligente](https://www.traini
 
 Web publicada: <https://testing-ia-trit.github.io/testing-ia-repaso/>
 
+Organización GitHub de Training IT para este curso: https://github.com/organizations/Testing-IA-TrIT
+
 ## Contenido
 
 | Página | Tema |
