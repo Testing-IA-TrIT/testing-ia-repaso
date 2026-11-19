@@ -1,6 +1,10 @@
 /* Estilos propios del glosario */
 
-/* Cómo encajan los conceptos */
+/* Cómo encajan los conceptos: una tarjeta por paso */
+.chains { display: grid; gap: 16px; }
+.chains .card { border-left: 3px solid var(--c); }
+.chains .card h3 { color: var(--c); margin-bottom: 14px; }
+.chains .card .chain-note { margin-top: 22px; }
 .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
 .chain .node {
   font: inherit; cursor: pointer; color: var(--text);

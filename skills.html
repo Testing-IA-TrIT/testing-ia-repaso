@@ -17,10 +17,10 @@
 
     <header class="hero">
       <span class="eyebrow">skills</span>
-      <h1>Un equipo de tres pipelines</h1>
+      <h1>Metodología y procedimientos</h1>
       <p class="lead">
-        Un pipeline llama a otras skills en orden. Cada skill primitiva hace una tarea.
-        El pipeline para una vez, para que tú decidas.
+        Cada skill primitiva hace una tarea.
+        Un pipeline llama a otras skills en orden. 
       </p>
       <div class="legend">
         <span><i class="swatch"></i> Skill primitiva</span>
@@ -39,7 +39,7 @@
           <p>Hace una tarea y entrega un resultado revisable.</p>
           <ul>
             <li>Una tarea por skill.</li>
-            <li>Funciona sola: <code>/define-test S1</code>.</li>
+            <li>Puede funcionar sola: <code>/define-test S1</code>.</li>
             <li>Su resultado alimenta a la siguiente.</li>
           </ul>
           <div class="mini"><b>define-test</b><i>→</i><b>.feature</b></div>
@@ -47,13 +47,13 @@
         <div class="card kind spec">
           <span class="tag">objeto-rol</span>
           <h3>Pipeline</h3>
-          <p>Llama a las primitivas en orden. Para cuando necesita tu decisión.</p>
+          <p>Llama a las primitivas en orden, solicita aprobación.</p>
           <ul>
-            <li>Una pausa por pipeline.</li>
             <li>Empieza en una conversación nueva.</li>
-            <li>No añade reglas. Las reglas están en las primitivas.</li>
+            <li>Una pausa de aprobación humana.</li>
+            <li>Concatena las reglas que están en las primitivas.</li>
           </ul>
-          <div class="mini"><b>define-test</b><i>→</i><b class="g">🧑</b><i>→</i><b>implement-test</b><i>→</i><b>fix-test</b></div>
+          <div class="mini"><b>test-builder</b><i>→</i><b>slug.tes.ts</b></div>
         </div>
       </div>
     </section>

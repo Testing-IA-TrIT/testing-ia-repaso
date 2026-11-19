@@ -19,34 +19,51 @@
       <span class="eyebrow">Glosario</span>
       <h1>Los conceptos del curso</h1>
       <p class="lead">
-        Un término por concepto, igual en todo el curso.
-        Busca un término o pulsa uno relacionado.
+        Diccionario de términos y relaciones, con su código y su definición. 
       </p>
     </header>
 
     <section>
       <h2>Cómo encajan</h2>
-      <p class="intro">De la funcionalidad a la ejecución. Pulsa un concepto para ver su definición.</p>
-      <div class="card">
-        <div class="chain">
-          <button class="node" type="button" data-jump="spec" style="--c: var(--spec)"><b>Spec</b><code>S1</code></button>
-          <span class="verb">contiene</span>
-          <button class="node" type="button" data-jump="story" style="--c: var(--spec)"><b>Historia</b><code>US1</code></button>
-          <span class="verb">contiene</span>
-          <button class="node" type="button" data-jump="req" style="--c: var(--spec)"><b>Requisito</b><code>R1 (US1)</code></button>
-          <span class="verb">se demuestra con</span>
-          <button class="node" type="button" data-jump="scenario" style="--c: #f472b6"><b>Escenario</b><code>[R1]</code></button>
-          <span class="verb">se comprueba con</span>
-          <button class="node" type="button" data-jump="test" style="--c: var(--test)"><b>Test</b><code>@S1-R1</code></button>
-          <span class="verb">forma parte de</span>
-          <button class="node" type="button" data-jump="suite" style="--c: var(--test)"><b>Suite</b><code>test:e2e</code></button>
+      <p class="intro">Tres pasos, desde la especificación hasta la suite de pruebas. Cada paso empieza donde acaba el anterior.</p>
+      <div class="chains">
+        <div class="card" style="--c: var(--spec)">
+          <h3>1 · Qué se pide</h3>
+          <div class="chain">
+            <button class="node" type="button" data-jump="spec" style="--c: var(--spec)"><b>Spec</b><code>S1</code></button>
+            <span class="verb">contiene</span>
+            <button class="node" type="button" data-jump="story" style="--c: var(--spec)"><b>Historia</b><code>US1</code></button>
+            <span class="verb">contiene</span>
+            <button class="node" type="button" data-jump="req" style="--c: var(--spec)"><b>Requisito</b><code>R1 (US1)</code></button>
+          </div>
+          <p class="chain-note">Cada requisito cita su historia: <code>R1 (US1)</code>.</p>
         </div>
-        <p class="chain-note">
-          Cada historia tiene un <button class="rel-chip" type="button" data-jump="feature" style="--c:#f472b6">Feature</button>.
-          Un <button class="rel-chip" type="button" data-jump="journey" style="--c:var(--spec)">Journey</button> cruza varias specs.
-          Las <button class="rel-chip" type="button" data-jump="skill" style="--c:var(--ok)">skills</button> escriben cada pieza.
-          El <button class="rel-chip" type="button" data-jump="triage" style="--c:var(--bugs)">triage</button> explica cada fallo.
-        </p>
+
+        <div class="card" style="--c: #f472b6">
+          <h3>2 · Cómo se demuestra</h3>
+          <div class="chain">
+            <button class="node" type="button" data-jump="story" style="--c: var(--spec)"><b>Historia</b><code>US1</code></button>
+            <span class="verb">se describe en</span>
+            <button class="node" type="button" data-jump="feature" style="--c: #f472b6"><b>Feature</b><code>US1-&lt;slug&gt;.feature</code></button>
+            <span class="verb">contiene</span>
+            <button class="node" type="button" data-jump="scenario" style="--c: #f472b6"><b>Escenario</b><code>[R1]</code></button>
+          </div>
+          <p class="chain-note">Hay un escenario por requisito. El código <code>[R1]</code> los une.</p>
+        </div>
+
+        <div class="card" style="--c: var(--test)">
+          <h3>3 · Cómo se comprueba</h3>
+          <div class="chain">
+            <button class="node" type="button" data-jump="feature" style="--c: #f472b6"><b>Feature</b><code>US1-&lt;slug&gt;.feature</code></button>
+            <span class="verb">se automatiza en</span>
+            <button class="node" type="button" data-jump="describe" style="--c: var(--test)"><b>Archivo de test</b><code>US1-&lt;slug&gt;.test.ts</code></button>
+            <span class="verb">contiene</span>
+            <button class="node" type="button" data-jump="test" style="--c: var(--test)"><b>Test</b><code>[R1] @S1-R1</code></button>
+            <span class="verb">forma parte de</span>
+            <button class="node" type="button" data-jump="suite" style="--c: var(--test)"><b>Suite</b><code>test:e2e</code></button>
+          </div>
+          <p class="chain-note">El <code>.test.ts</code> tiene el mismo nombre que el <code>.feature</code>. Cada escenario <code>[R1]</code> tiene su test <code>[R1]</code>.</p>
+        </div>
       </div>
     </section>
 

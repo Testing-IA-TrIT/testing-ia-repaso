@@ -31,7 +31,7 @@ class SiteHeader extends HTMLElement {
     ).join("");
     this.innerHTML = `
       <nav class="topbar">
-        <a class="brand" href="index.html"${currentAttr("index.html")}>Testing Inteligente · Repaso</a>
+        <a class="brand" href="index.html"${currentAttr("index.html")}>Testing Inteligente </a>
         <span class="menu">${links}</span>
       </nav>`;
   }

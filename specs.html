@@ -17,17 +17,16 @@
 
     <header class="hero">
       <span class="eyebrow">specs</span>
-      <h1>Del requisito a la prueba, y vuelta</h1>
+      <h1>Problema, solución y verificación</h1>
       <p class="lead">
-        De un requisito llegas a su prueba. De un fallo llegas a su requisito.
-        Es fácil porque todos los niveles usan el mismo código.
+        De un requisito llegas a su prueba. Con trazas de ida y vuelta.
       </p>
       <p class="jump-link">¿El objetivo cruza varias specs? <a href="#journeys">→ Journeys</a></p>
     </header>
 
     <section class="reveal">
       <h2>Dos niveles, los mismos códigos</h2>
-      <p class="intro">La spec dice <b>qué</b> hace la aplicación. Las pruebas dicen <b>cómo</b> se comprueba. Las pruebas repiten los códigos del análisis. No crean códigos nuevos.</p>
+      <p class="intro">La spec dice <b>qué</b> hace la aplicación. Los tests dicen <b>cómo</b> se comprueba. </p>
       <div class="grid grid-2 levels">
         <div class="card level lvl-spec">
           <span class="folder">specs/S1-schedule-launch/</span>
@@ -50,12 +49,12 @@
           </ul>
         </div>
       </div>
-      <p class="same-code">Un requisito, su escenario y su prueba comparten el código: <code>R1</code> → <code>[R1]</code> → <code>@S1-R1</code></p>
+      <p class="same-code">Mismos códigos inmutables para trazas: <code>S1</code> → <code>[R1]</code> → <code>@S1-R1</code></p>
     </section>
 
     <section class="reveal">
       <h2>El mapa de una spec</h2>
-      <p class="intro">Una spec de ejemplo: dos historias y cinco requisitos. Pasa el ratón por un elemento para ver su camino en los tres archivos. Debajo verás cómo ejecutarlo.</p>
+      <p class="intro">Pasa el ratón por un elemento para ver su camino en los tres archivos. Debajo verás cómo ejecutarlo.</p>
       <div class="map-tools">
         <button class="btn" id="all-btn" type="button">Ver toda la spec</button>
         <button class="btn fail" id="fail-btn" type="button" aria-pressed="false">✗ Simular un fallo</button>
@@ -195,7 +194,7 @@
     </section>
 
     <section class="reveal">
-      <blockquote class="quote">Un código, tres archivos. Si una prueba no cita su requisito, no sabes qué comprueba.</blockquote>
+      <blockquote class="quote">Un mismo código en tres archivos para saber siempre lo que compruebas.</blockquote>
     </section>
 
     <site-footer></site-footer>

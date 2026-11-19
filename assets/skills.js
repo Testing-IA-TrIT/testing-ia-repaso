@@ -5,10 +5,10 @@ const PIPELINES = [
   {
     id: "spec-builder",
     family: "spec",
-    role: "Construye",
+    role: "Funcionalidad",
     summary: "De una petición a una spec aprobada, y de la spec al código.",
-    start: "Una petición: «Quiero programar lanzamientos de cohetes»",
-    end: "La funcionalidad implementada según la spec",
+    start: "Una petición con requerimientos y límites",
+    end: "La especificación y su implementación",
     steps: [
       {
         name: "define-spec",
@@ -39,8 +39,8 @@ const PIPELINES = [
     family: "test",
     role: "Prueba",
     summary: "De los requisitos de una spec, o los pasos de un journey, a pruebas de Playwright.",
-    start: "El código de una spec (S1) o de un journey (J1)",
-    end: "Una prueba por escenario",
+    start: "Una especificación (S1) o un itinerario (J1)",
+    end: "Código de pruebas para sus escenarios",
     steps: [
       {
         name: "define-test",
@@ -76,10 +76,10 @@ const PIPELINES = [
   {
     id: "bugs-hunter",
     family: "bugs",
-    role: "Juzga",
-    summary: "Ejecuta la suite, decide el origen de cada fallo y lo corrige en una pasada.",
-    start: "Una spec y toda la suite de pruebas",
-    end: "Una ejecución nueva que dice qué queda",
+    role: "Juicio",
+    summary: "Ejecuta la suite, obtiene el origen de cada fallo y lo corrige en una pasada.",
+    start: "Una especificación",
+    end: "Un informe de corrección o arreglo pendiente",
     steps: [
       {
         name: "detect-bugs",
