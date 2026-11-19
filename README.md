@@ -27,4 +27,9 @@ GitHub Pages publica la rama `main` desde la raíz. Cada push a `main` actualiza
 
 ---
 
-Autor: [Alberto Basalo](https://albertobasalo.dev)
+**[Alberto Basalo](https://albertobasalo.dev)**
+
+- [LinkedIn](https://www.linkedin.com/in/albertobasalo/)
+- [x/twitter](https://twitter.com/albertobasalo)
+- [AI Code Academy](https://aicode.academy)
+- [AIDDbot](https://aiddbot.com)
