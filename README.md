@@ -8,15 +8,16 @@ Organización GitHub de Training IT para este curso: https://github.com/organiza
 
 ## Contenido
 
-| Página | Tema |
-| --- | --- |
-| `index.html` | Portada |
-| `glosario.html` | Fundamentos · Conceptos del curso |
-| `playwright.html` | Herramienta · Buenas prácticas de Playwright |
-| `skills.html` | Proceso · Pipelines y skills primitivas |
-| `specs.html` | Artefactos · De la spec a la prueba, y journeys |
+La portada (`index.html`) presenta cuatro ejes. Cada eje es una página:
 
-Los estilos y los scripts están en `assets/`.
+| Eje | Página | Qué responde |
+| --- | --- | --- |
+| Fundamentos | `glosario.html` | Qué significa cada término del curso |
+| Herramienta | `playwright.html` | Cómo escribir una buena prueba con Playwright |
+| Proceso | `skills.html` | Qué hace cada pipeline y cada skill, y qué archivos se pasan |
+| Artefactos | `specs.html` | Cómo llega un requisito a su prueba. Al final, los journeys (`#journeys`) |
+
+Los estilos y los scripts están en `assets/`. Las decisiones sobre el sitio, con su motivo, están en `docs/decisions/`. Las instrucciones para agentes de IA están en `AGENTS.md`.
 
 ## Ver en local
 
