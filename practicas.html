@@ -7,13 +7,11 @@
   <meta name="description" content="Resumen visual de buenas prácticas de Playwright: localizar, comprobar, organizar, datos y diagnóstico, con ejemplos malos y buenos.">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/practicas.css">
+  <script src="assets/site.js"></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topbar">
-      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
-      <span class="menu"><a href="glosario.html">Glosario</a><a href="practicas.html" aria-current="page">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" class="mono">journeys</a></span>
-    </nav>
+    <site-header></site-header>
 
     <header class="hero">
       <span class="eyebrow">Buenas prácticas</span>
@@ -86,21 +84,7 @@
       </p>
     </section>
 
-    <footer class="site-footer">
-      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
-      <div class="f-links">
-        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
-          <span class="f-kind">El curso</span>
-          <span class="f-title">Testing Inteligente en TrainingIT</span>
-          <span class="f-url">trainingit.es/producto/testing-ia →</span>
-        </a>
-        <a class="f-link f-author" href="https://albertobasalo.dev">
-          <span class="f-kind">El autor</span>
-          <span class="f-title">Alberto Basalo</span>
-          <span class="f-url">albertobasalo.dev →</span>
-        </a>
-      </div>
-    </footer>
+    <site-footer></site-footer>
   </div>
 
   <script src="assets/practicas.js"></script>

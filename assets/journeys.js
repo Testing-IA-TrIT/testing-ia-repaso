@@ -57,18 +57,6 @@ let running = false;
 const stations = [];
 const segs = [];
 
-function el(tag, attrs = {}, children = []) {
-  const node = document.createElement(tag);
-  for (const [key, value] of Object.entries(attrs)) {
-    if (key === "class") node.className = value;
-    else if (key === "text") node.textContent = value;
-    else if (key === "style") node.style.cssText = value;
-    else node.setAttribute(key, value);
-  }
-  for (const child of [].concat(children)) if (child != null) node.append(child);
-  return node;
-}
-
 const codeOf = (s) => `${s.spec}-${s.req}`;
 
 function renderMetro() {
@@ -199,13 +187,5 @@ renderMetro();
 renderBoard();
 select(0);
 
-// Animación de entrada al hacer scroll
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  }
-}, { threshold: 0.08 });
-document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+// Animación de entrada al hacer scroll (assets/site.js)
+revealOnScroll();

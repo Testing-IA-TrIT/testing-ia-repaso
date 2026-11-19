@@ -80,6 +80,10 @@ code {
 
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 
+/* <site-header> y <site-footer> (assets/site.js) no crean caja propia:
+   así la barra sticky y el pie se comportan como si estuvieran directamente en .wrap */
+site-header, site-footer { display: contents; }
+
 /* Barra superior: fija arriba en todas las páginas */
 :root { --topbar-h: 56px; }
 .topbar {

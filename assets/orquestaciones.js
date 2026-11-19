@@ -125,17 +125,6 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 const STEP_MS = reduceMotion ? 150 : 1100;
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function el(tag, attrs = {}, children = []) {
-  const node = document.createElement(tag);
-  for (const [key, value] of Object.entries(attrs)) {
-    if (key === "class") node.className = value;
-    else if (key === "text") node.textContent = value;
-    else node.setAttribute(key, value);
-  }
-  for (const child of [].concat(children)) node.append(child);
-  return node;
-}
-
 function renderDetail(panel, step) {
   panel.classList.toggle("is-gate", Boolean(step.gate));
   const labels = step.gate
@@ -247,13 +236,5 @@ function renderPipeline(pipeline) {
 
 document.getElementById("pipelines").append(...PIPELINES.map(renderPipeline));
 
-// Animación de entrada al hacer scroll
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  }
-}, { threshold: 0.12 });
-document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+// Animación de entrada al hacer scroll (assets/site.js)
+revealOnScroll(0.12);

@@ -7,13 +7,11 @@
   <meta name="description" content="Repaso visual: un recorrido de usuario paso a paso, qué cubren las pruebas y dónde se comprueba el resultado esperado.">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/journeys.css">
+  <script src="assets/site.js"></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topbar">
-      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
-      <span class="menu"><a href="glosario.html">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" aria-current="page" class="mono">journeys</a></span>
-    </nav>
+    <site-header></site-header>
 
     <header class="hero">
       <span class="eyebrow">journeys · Recorridos</span>
@@ -150,21 +148,7 @@
       <p class="intro" style="margin-top:20px">Para pensar: ¿qué demuestra el journey que <b>no demuestran las specs</b>?</p>
     </section>
 
-    <footer class="site-footer">
-      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
-      <div class="f-links">
-        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
-          <span class="f-kind">El curso</span>
-          <span class="f-title">Testing Inteligente en TrainingIT</span>
-          <span class="f-url">trainingit.es/producto/testing-ia →</span>
-        </a>
-        <a class="f-link f-author" href="https://albertobasalo.dev">
-          <span class="f-kind">El autor</span>
-          <span class="f-title">Alberto Basalo</span>
-          <span class="f-url">albertobasalo.dev →</span>
-        </a>
-      </div>
-    </footer>
+    <site-footer></site-footer>
   </div>
 
   <script src="assets/journeys.js"></script>

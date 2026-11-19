@@ -7,13 +7,11 @@
   <meta name="description" content="Glosario del curso Testing Inteligente: spec, historia de usuario, requisito, feature, test, suite y otros conceptos fundamentales.">
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/glosario.css">
+  <script src="assets/site.js"></script>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topbar">
-      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
-      <span class="menu"><a href="glosario.html" aria-current="page">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" class="mono">journeys</a></span>
-    </nav>
+    <site-header></site-header>
 
     <header class="hero">
       <span class="eyebrow">Glosario</span>
@@ -60,21 +58,7 @@
       <div class="terms" id="terms"></div>
     </section>
 
-    <footer class="site-footer">
-      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
-      <div class="f-links">
-        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
-          <span class="f-kind">El curso</span>
-          <span class="f-title">Testing Inteligente en TrainingIT</span>
-          <span class="f-url">trainingit.es/producto/testing-ia →</span>
-        </a>
-        <a class="f-link f-author" href="https://albertobasalo.dev">
-          <span class="f-kind">El autor</span>
-          <span class="f-title">Alberto Basalo</span>
-          <span class="f-url">albertobasalo.dev →</span>
-        </a>
-      </div>
-    </footer>
+    <site-footer></site-footer>
   </div>
 
   <script src="assets/glosario.js"></script>

@@ -121,19 +121,6 @@ function highlight(code) {
     (m, comment, str, kw) => comment ? `<span class="c">${m}</span>` : str ? `<span class="s">${m}</span>` : `<span class="k">${m}</span>`);
 }
 
-function el(tag, attrs = {}, children = []) {
-  const node = document.createElement(tag);
-  for (const [key, value] of Object.entries(attrs)) {
-    if (key === "class") node.className = value;
-    else if (key === "text") node.textContent = value;
-    else if (key === "html") node.innerHTML = value;
-    else if (key === "style") node.style.cssText = value;
-    else node.setAttribute(key, value);
-  }
-  for (const child of [].concat(children)) if (child != null) node.append(child);
-  return node;
-}
-
 function renderPractices() {
   const root = document.getElementById("practices");
   for (const [gid, g] of Object.entries(GROUPS)) {
@@ -220,16 +207,8 @@ renderPractices();
 wireAnatomy();
 renderChecklist();
 
-// Animación de entrada al hacer scroll
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      observer.unobserve(entry.target);
-    }
-  }
-}, { threshold: 0.08 });
-document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+// Animación de entrada al hacer scroll (assets/site.js)
+revealOnScroll();
 
 // Enlaces directos (practicas.html#locators): las prácticas se crean con JS, así que el salto se hace aquí.
 if (location.hash) {
