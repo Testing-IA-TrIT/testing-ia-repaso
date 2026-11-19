@@ -20,6 +20,13 @@
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   --sans: "Roboto", system-ui, "Segoe UI", sans-serif;
   --display: "Audiowide", "Roboto", sans-serif;
+  /* Acentos de albertobasalo.dev: solo para barra superior y pie */
+  --ab-primary: #3b82f6;
+  --ab-accent: #22c55e;
+  --ab-gradient: linear-gradient(130deg, #3b82f6 0%, #22c55e 100%);
+  --ab-glass: rgba(9, 15, 31, 0.64);
+  --ab-glass-border: rgba(96, 165, 250, 0.32);
+  --ab-glow: rgba(59, 130, 246, 0.4);
   /* Fondo "mesh" de albertobasalo.dev */
   --mesh-dark:
     radial-gradient(circle at 12% 15%, #3b82f63d, transparent 45%),
@@ -87,14 +94,23 @@ code {
   font-size: 0.9rem;
   color: var(--muted);
   /* fondo a todo el ancho de la ventana, aunque la barra esté dentro de .wrap */
-  background: rgba(4, 7, 17, 0.86);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 0 100vmax rgba(4, 7, 17, 0.86), 0 1px 0 100vmax var(--line);
+  background: var(--ab-glass);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 0 100vmax var(--ab-glass), 0 1px 0 100vmax var(--ab-glass-border);
   clip-path: inset(0 -100vmax -1px);
 }
 .topbar a { color: var(--muted); text-decoration: none; white-space: nowrap; }
 .topbar a:hover, .topbar a[aria-current="page"] { color: var(--text); }
-.brand { letter-spacing: 0.04em; text-transform: uppercase; }
+.topbar .brand {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  /* Logo con degradado y brillo, como en albertobasalo.dev */
+  background: var(--ab-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 12px var(--ab-glow));
+}
 .menu { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
 .menu a { padding: 4px 10px; border-radius: 999px; }
 .menu a:hover { background: var(--panel); }
@@ -169,7 +185,7 @@ footer {
   padding: 40px 0 60px;
   color: var(--muted);
   font-size: 0.9rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--ab-primary);
   margin-top: 40px;
 }
 
@@ -180,13 +196,14 @@ footer {
 .f-link {
   display: flex; flex-direction: column; gap: 4px;
   padding: 20px 24px; border-radius: var(--radius); text-decoration: none; color: var(--text);
-  border: 1px solid var(--line); border-left: 4px solid var(--accent);
-  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 16%, transparent), var(--panel) 70%);
+  border: 1px solid var(--ab-glass-border); border-left: 4px solid var(--accent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 16%, transparent), var(--ab-glass) 70%);
+  backdrop-filter: blur(16px);
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .f-link:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 30px -12px var(--accent); }
-.f-course { --accent: var(--test); }
-.f-author { --accent: var(--spec); }
+.f-course { --accent: var(--ab-primary); }
+.f-author { --accent: var(--ab-accent); }
 .f-kind { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .f-title { font-size: 1.2rem; }
 .f-url { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); }
