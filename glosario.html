@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glosario · Testing Inteligente</title>
+  <meta name="description" content="Glosario del curso Testing Inteligente: spec, historia de usuario, requisito, feature, test, suite y otros conceptos fundamentales.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/glosario.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
+      <span class="menu"><a href="glosario.html" aria-current="page">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" class="mono">journeys</a></span>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">Glosario</span>
+      <h1>Los conceptos del curso</h1>
+      <p class="lead">
+        Un término para cada concepto, y el mismo término en todo el curso.
+        Busca un término o pulsa un relacionado para saltar a su definición.
+      </p>
+    </header>
+
+    <section>
+      <h2>Cómo encajan</h2>
+      <p class="intro">La cadena principal, de la funcionalidad a la ejecución. Pulsa un concepto para ver su definición.</p>
+      <div class="card">
+        <div class="chain">
+          <button class="node" type="button" data-jump="spec" style="--c: var(--spec)"><b>Spec</b><code>S1</code></button>
+          <span class="verb">contiene</span>
+          <button class="node" type="button" data-jump="story" style="--c: var(--spec)"><b>Historia</b><code>US1</code></button>
+          <span class="verb">contiene</span>
+          <button class="node" type="button" data-jump="req" style="--c: var(--spec)"><b>Requisito</b><code>R1 (US1)</code></button>
+          <span class="verb">se demuestra con</span>
+          <button class="node" type="button" data-jump="scenario" style="--c: #f472b6"><b>Escenario</b><code>[R1]</code></button>
+          <span class="verb">se comprueba con</span>
+          <button class="node" type="button" data-jump="test" style="--c: var(--test)"><b>Test</b><code>@S1-R1</code></button>
+          <span class="verb">forma parte de</span>
+          <button class="node" type="button" data-jump="suite" style="--c: var(--test)"><b>Suite</b><code>test:e2e</code></button>
+        </div>
+        <p class="chain-note">
+          Una historia tiene su archivo <button class="rel-chip" type="button" data-jump="feature" style="--c:#f472b6">Feature</button>.
+          Un <button class="rel-chip" type="button" data-jump="journey" style="--c:var(--spec)">Journey</button> atraviesa varias specs.
+          Las <button class="rel-chip" type="button" data-jump="skill" style="--c:var(--ok)">skills</button> escriben cada pieza y el
+          <button class="rel-chip" type="button" data-jump="triage" style="--c:var(--bugs)">triage</button> explica cada fallo.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Todos los términos</h2>
+      <div class="finder">
+        <input id="search" type="search" placeholder="Buscar: spec, tag, expect…" aria-label="Buscar un término">
+        <div class="filters" id="filters" role="group" aria-label="Filtrar por grupo"></div>
+        <span class="count" id="count" aria-live="polite"></span>
+      </div>
+      <div class="terms" id="terms"></div>
+    </section>
+
+    <footer class="site-footer">
+      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
+      <div class="f-links">
+        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
+          <span class="f-kind">El curso</span>
+          <span class="f-title">Testing Inteligente en TrainingIT</span>
+          <span class="f-url">trainingit.es/producto/testing-ia →</span>
+        </a>
+        <a class="f-link f-author" href="https://albertobasalo.dev">
+          <span class="f-kind">El autor</span>
+          <span class="f-title">Alberto Basalo</span>
+          <span class="f-url">albertobasalo.dev →</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/glosario.js"></script>
+</body>
+</html>

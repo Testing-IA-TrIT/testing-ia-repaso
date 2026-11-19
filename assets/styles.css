@@ -1,0 +1,182 @@
+/* Material de repaso · Testing Inteligente
+   Estilo común para todas las páginas. */
+
+:root {
+  --bg: #0a0f1f;
+  --bg-2: #111833;
+  --panel: rgba(255, 255, 255, 0.04);
+  --line: rgba(255, 255, 255, 0.12);
+  --text: #e8ecf8;
+  --muted: #9aa5c4;
+  --spec: #a78bfa;   /* familia spec: construye */
+  --test: #22d3ee;   /* familia test: prueba */
+  --bugs: #fbbf24;   /* familia bugs: juzga */
+  --gate: #fb7185;   /* pausa humana */
+  --ok: #4ade80;
+  --radius: 18px;
+  --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  color: var(--text);
+  line-height: 1.6;
+  background:
+    radial-gradient(1px 1px at 12% 18%, #fff8 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 9%, #fff6 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 38% 64%, #fff5 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 52%, #fff7 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 86%, #fff5 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 32%, #fff4 50%, transparent 51%),
+    radial-gradient(1200px 600px at 85% -10%, #2a1f5c 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, #0f3a4a 0%, transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+a { color: var(--test); }
+
+code, .mono { font-family: var(--mono); font-size: 0.92em; }
+
+code {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 0.1em 0.4em;
+  border-radius: 6px;
+}
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Barra superior: fija arriba en todas las páginas */
+:root { --topbar-h: 56px; }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--topbar-h);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  /* fondo a todo el ancho de la ventana, aunque la barra esté dentro de .wrap */
+  background: rgba(10, 15, 31, 0.86);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 0 100vmax rgba(10, 15, 31, 0.86), 0 1px 0 100vmax var(--line);
+  clip-path: inset(0 -100vmax -1px);
+}
+.topbar a { color: var(--muted); text-decoration: none; white-space: nowrap; }
+.topbar a:hover, .topbar a[aria-current="page"] { color: var(--text); }
+.brand { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.menu { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.menu a { padding: 4px 10px; border-radius: 999px; }
+.menu a:hover { background: var(--panel); }
+.menu a[aria-current="page"] { background: rgba(255, 255, 255, 0.1); }
+.menu a.mono { font-size: 0.85rem; }
+
+/* Los saltos a un ancla no quedan debajo de la barra */
+html { scroll-padding-top: calc(var(--topbar-h) + 16px); }
+
+@media (max-width: 720px) {
+  .brand { font-size: 0; }
+  .brand::before { content: "← Inicio"; font-size: 0.85rem; letter-spacing: 0; text-transform: none; }
+  .brand[aria-current="page"]::before { content: "Inicio"; }
+}
+
+/* Cabecera */
+.hero { padding: 48px 0 32px; }
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.1;
+  margin: 18px 0 16px;
+  background: linear-gradient(90deg, var(--spec), var(--test) 50%, var(--bugs));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lead { font-size: 1.2rem; color: var(--muted); max-width: 760px; margin: 0; }
+
+/* Secciones */
+section { padding: 40px 0; }
+section > h2 { font-size: 1.7rem; margin: 0 0 8px; }
+section > .intro { color: var(--muted); max-width: 760px; margin: 0 0 28px; }
+
+.grid { display: grid; gap: 20px; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  backdrop-filter: blur(6px);
+}
+.card h3 { margin: 0 0 8px; }
+.card p { margin: 0; color: var(--muted); }
+
+/* Cita de cierre */
+.quote {
+  border-left: 4px solid var(--test);
+  padding: 8px 0 8px 20px;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+
+footer {
+  padding: 40px 0 60px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+}
+
+/* Pie con enlaces destacados al curso y al autor */
+.site-footer .f-note { margin: 0 0 18px; }
+.site-footer .f-note b { color: var(--text); }
+.f-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.f-link {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 20px 24px; border-radius: var(--radius); text-decoration: none; color: var(--text);
+  border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 16%, transparent), var(--panel) 70%);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.f-link:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 30px -12px var(--accent); }
+.f-course { --accent: var(--test); }
+.f-author { --accent: var(--spec); }
+.f-kind { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.f-title { font-size: 1.2rem; font-weight: 700; }
+.f-url { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); }
+
+/* Animación de entrada */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

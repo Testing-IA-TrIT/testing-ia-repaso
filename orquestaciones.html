@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orquestaciones y skills primitivas · Testing Inteligente</title>
+  <meta name="description" content="Repaso visual: qué hace cada pipeline, qué skills primitivas invoca y qué resultado aporta cada una.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/orquestaciones.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
+      <span class="menu"><a href="glosario.html">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" aria-current="page" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" class="mono">journeys</a></span>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">skills · Orquestaciones</span>
+      <h1>Un equipo de tres pipelines</h1>
+      <p class="lead">
+        Un pipeline es una skill que invoca otras skills en orden. Cada skill primitiva hace una sola tarea y entrega un resultado.
+        El pipeline para una vez, en el punto donde tú decides.
+      </p>
+      <div class="legend">
+        <span><i class="swatch"></i> Skill primitiva</span>
+        <span><i class="swatch gate"></i> Pausa humana: apruebas o pides cambios</span>
+        <span><i class="swatch pipe"></i> Pipeline: invoca las primitivas en orden</span>
+      </div>
+    </header>
+
+    <section class="reveal">
+      <h2>Dos tipos de skill</h2>
+      <p class="intro">Las dos son carpetas con un <code>SKILL.md</code>. Cambia lo que hacen: una ejecuta una tarea; la otra ordena tareas.</p>
+      <div class="grid grid-2">
+        <div class="card kind test">
+          <span class="tag">verbo-objeto</span>
+          <h3>Skill primitiva</h3>
+          <p>Hace una tarea y entrega un resultado que puedes revisar.</p>
+          <ul>
+            <li>Una tarea en cada skill.</li>
+            <li>Se puede usar sola: <code>/define-test S1</code>.</li>
+            <li>Su resultado es la entrada de la siguiente.</li>
+          </ul>
+          <div class="mini"><b>define-test</b><i>→</i><b>.feature</b></div>
+        </div>
+        <div class="card kind spec">
+          <span class="tag">objeto-rol</span>
+          <h3>Pipeline</h3>
+          <p>Invoca las skills primitivas en orden y para cuando hace falta tu decisión.</p>
+          <ul>
+            <li>Una sola pausa en cada pipeline.</li>
+            <li>Empieza en una conversación nueva.</li>
+            <li>No añade reglas: las reglas están en las primitivas.</li>
+          </ul>
+          <div class="mini"><b>define-test</b><i>→</i><b class="g">🧑</b><i>→</i><b>implement-test</b><i>→</i><b>fix-test</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="reveal">Los tres pipelines</h2>
+      <p class="intro reveal">Pulsa <b>▶ Ver el recorrido</b> para seguir el trabajo paso a paso. Pulsa una caja para ver su entrada, su tarea y su resultado.</p>
+      <div id="pipelines"></div>
+    </section>
+
+    <section class="reveal">
+      <h2>El hilo de los artefactos</h2>
+      <p class="intro">Cada pipeline deja archivos que el siguiente lee. Por eso un pipeline puede empezar en una conversación nueva: todo lo que necesita está en el repositorio.</p>
+      <div class="card">
+        <div class="thread">
+          <span class="artifact plain">petición</span><span class="arrow">→</span>
+          <span class="artifact spec">spec.md</span><span class="arrow">→</span>
+          <span class="artifact spec">código</span><span class="arrow">→</span>
+          <span class="artifact test">.feature</span><span class="arrow">→</span>
+          <span class="artifact test">.test.ts</span><span class="arrow">→</span>
+          <span class="artifact bugs">e2e-report.md</span><span class="arrow">→</span>
+          <span class="artifact bugs">fix.spec.md</span><span class="arrow">→</span>
+          <span class="artifact bugs">diff</span><span class="arrow">→</span>
+          <span class="artifact bugs">informe nuevo</span>
+        </div>
+        <div class="thread-legend">
+          <span class="spec">spec-builder</span>
+          <span class="test">test-builder</span>
+          <span class="bugs">bugs-hunter</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2>Tres reglas del reparto</h2>
+      <p class="intro">El reparto es por responsable: uno construye, otro prueba y otro juzga.</p>
+      <div class="grid grid-3">
+        <div class="card rule">
+          <span class="num">1</span>
+          <h3>Una pausa por pipeline</h3>
+          <p>El pipeline para donde se decide algo: la spec, los escenarios o el veredicto. Otra pausa solo repetiría la aprobación.</p>
+        </div>
+        <div class="card rule">
+          <span class="num">2</span>
+          <h3>Una conversación nueva</h3>
+          <p>Cada pipeline empieza sin el contexto del anterior, como otra persona del equipo. No hereda supuestos.</p>
+        </div>
+        <div class="card rule">
+          <span class="num">3</span>
+          <h3>Nadie se juzga a sí mismo</h3>
+          <p>El contexto que escribe el código no escribe sus pruebas. El contexto que escribe las pruebas no decide el veredicto.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <blockquote class="quote">Las skills primitivas hacen el trabajo. El pipeline las ordena. Tú decides en la pausa.</blockquote>
+    </section>
+
+    <footer class="site-footer">
+      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
+      <div class="f-links">
+        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
+          <span class="f-kind">El curso</span>
+          <span class="f-title">Testing Inteligente en TrainingIT</span>
+          <span class="f-url">trainingit.es/producto/testing-ia →</span>
+        </a>
+        <a class="f-link f-author" href="https://albertobasalo.dev">
+          <span class="f-kind">El autor</span>
+          <span class="f-title">Alberto Basalo</span>
+          <span class="f-url">albertobasalo.dev →</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/orquestaciones.js"></script>
+</body>
+</html>

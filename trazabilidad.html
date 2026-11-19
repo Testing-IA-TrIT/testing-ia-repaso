@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>De la spec a la prueba · Testing Inteligente</title>
+  <meta name="description" content="Repaso visual: cómo se organizan historias y requisitos en una spec, y cómo llega cada requisito a su escenario y a su prueba.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/trazabilidad.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
+      <span class="menu"><a href="glosario.html">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" aria-current="page" class="mono">specs</a><a href="journeys.html" class="mono">journeys</a></span>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">specs · Trazabilidad</span>
+      <h1>Del requisito a la prueba, y vuelta</h1>
+      <p class="lead">
+        Desde un requisito, llegas a su prueba. Desde una prueba que falla, llegas al requisito que no se cumple.
+        El camino es corto porque todos los niveles usan el mismo código.
+      </p>
+    </header>
+
+    <section class="reveal">
+      <h2>Dos niveles, los mismos códigos</h2>
+      <p class="intro">La spec dice <b>qué</b> debe hacer la aplicación. Las pruebas dicen <b>cómo</b> se comprueba. Las pruebas repiten los códigos del análisis y no crean códigos nuevos.</p>
+      <div class="grid grid-2 levels">
+        <div class="card level lvl-spec">
+          <span class="folder">specs/S1-schedule-launch/</span>
+          <h3>Análisis</h3>
+          <ul class="nest">
+            <li style="--d:0"><b>S1</b><span>la spec, en <code>spec.md</code></span></li>
+            <li style="--d:1"><b>US1…US3</b><span>historias: de 1 a 3 por spec</span></li>
+            <li style="--d:2"><b>R1…R9</b><span>requisitos EARS: de 1 a 9 por spec</span></li>
+            <li style="--d:3"><b>[R1]</b><span>un escenario por requisito, en el <code>.feature</code> de su historia</span></li>
+          </ul>
+        </div>
+        <div class="card level lvl-test">
+          <span class="folder">e2e/tests/S1-schedule-launch/</span>
+          <h3>Pruebas</h3>
+          <ul class="nest">
+            <li style="--d:0"><b>@S1</b><span>la carpeta, con el mismo nombre</span></li>
+            <li style="--d:1"><b>@S1-US1</b><span>un <code>.test.ts</code> y un <code>test.describe</code> por historia</span></li>
+            <li style="--d:2"><b>@S1-R1</b><span>la etiqueta del requisito</span></li>
+            <li style="--d:3"><b>[R1]</b><span>un <code>test</code> por escenario; uno por fila con <code>Scenario Outline</code></span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="same-code">Un requisito, su escenario y su prueba comparten el código: <code>R1</code> → <code>[R1]</code> → <code>@S1-R1</code></p>
+    </section>
+
+    <section class="reveal">
+      <h2>El mapa de una spec</h2>
+      <p class="intro">Una spec de ejemplo con dos historias y cinco requisitos. Pasa el ratón por cualquier elemento: se ilumina su camino en los tres archivos. El panel de abajo dice cómo ejecutar ese nivel.</p>
+      <div class="map-tools">
+        <button class="btn" id="all-btn" type="button">Ver toda la spec</button>
+        <button class="btn fail" id="fail-btn" type="button" aria-pressed="false">✗ Simular un fallo</button>
+        <span class="hint">Con el fallo, sigue la traza al revés.</span>
+      </div>
+      <div class="map" id="map"></div>
+      <div class="trace-panel" id="trace-panel" aria-live="polite"></div>
+    </section>
+
+    <section class="reveal">
+      <h2>Seguir la traza</h2>
+      <p class="intro">Hay dos direcciones. Las dos usan solo el código y una búsqueda.</p>
+      <div class="grid grid-2">
+        <div class="card steps-card lvl-spec">
+          <span class="dir">spec → prueba</span>
+          <h3>Si cambia un requisito</h3>
+          <ol>
+            <li>Busca su código en <code>spec.md</code>, por ejemplo <code>R5 (US2)</code>.</li>
+            <li>Abre <code>US2-&lt;slug&gt;.feature</code> y busca el escenario <code>[R5]</code>.</li>
+            <li>Abre <code>US2-&lt;slug&gt;.test.ts</code> y busca los <code>test</code> con <code>@S1-R5</code>.</li>
+          </ol>
+        </div>
+        <div class="card steps-card up">
+          <span class="dir">prueba → spec</span>
+          <h3>Si falla una prueba</h3>
+          <ol>
+            <li>Lee la etiqueta del <code>test</code> en el informe, por ejemplo <code>@S1-R2</code>.</li>
+            <li>Busca <code>R2</code> en <code>spec.md</code>. El criterio dice su historia: <code>US1</code>.</li>
+            <li>Compara el resultado de la prueba con el criterio EARS. Decide si falla la aplicación o la prueba.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2>Cuántos de cada</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>Análisis</th><th>Cuántos</th><th>Prueba</th><th>Ejecutar</th></tr></thead>
+          <tbody>
+            <tr><td>Spec <code>S1</code></td><td>1</td><td>Carpeta <code>S1-schedule-launch/</code></td><td class="mono">--grep '@S1'</td></tr>
+            <tr><td>Historia <code>US1</code></td><td>1–3 por spec</td><td><code>US1-&lt;slug&gt;.test.ts</code> y su <code>test.describe</code></td><td class="mono">--grep '@S1-US1'</td></tr>
+            <tr><td>Requisito <code>R1 (US1)</code></td><td>1–9 por spec</td><td>Etiqueta <code>@S1-R1</code></td><td class="mono">--grep '@S1-R1'</td></tr>
+            <tr><td>Escenario <code>[R1]</code></td><td>1 por requisito</td><td><code>test('[R1] …')</code>; uno por fila de <code>Examples</code></td><td>La misma etiqueta</td></tr>
+            <tr><td><code>Given / When / Then</code></td><td>Varios por escenario</td><td>Datos, acciones y <code>expect</code></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2>Lo que no tiene código</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Contexto, no pruebas</h3>
+          <p>El problema, las reglas, la solución y lo que queda fuera de alcance no tienen código. No generan una prueba. Si una regla se debe comprobar, escríbela también como requisito EARS.</p>
+        </div>
+        <div class="card">
+          <h3>Un nombre para cada cosa</h3>
+          <p>«Spec» es la especificación funcional, en <code>spec.md</code>. Un archivo <code>.test.ts</code> es el código que comprueba una historia. Por eso las pruebas no usan el sufijo <code>.spec.ts</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <blockquote class="quote">Un código, tres archivos. Si una prueba no cita su requisito, no puedes saber qué comprueba.</blockquote>
+    </section>
+
+    <footer class="site-footer">
+      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
+      <div class="f-links">
+        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
+          <span class="f-kind">El curso</span>
+          <span class="f-title">Testing Inteligente en TrainingIT</span>
+          <span class="f-url">trainingit.es/producto/testing-ia →</span>
+        </a>
+        <a class="f-link f-author" href="https://albertobasalo.dev">
+          <span class="f-kind">El autor</span>
+          <span class="f-title">Alberto Basalo</span>
+          <span class="f-url">albertobasalo.dev →</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/trazabilidad.js"></script>
+</body>
+</html>

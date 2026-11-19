@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Material de repaso · Testing Inteligente</title>
+  <meta name="description" content="Glosario, buenas prácticas de Playwright y páginas visuales para repasar los procesos del curso Testing Inteligente.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .section-title { display: flex; align-items: baseline; gap: 12px; font-size: 1.5rem; margin: 0 0 6px; }
+    .section-title small { font-size: .95rem; font-weight: 400; color: var(--muted); }
+    .section-intro { color: var(--muted); margin: 0 0 22px; max-width: 760px; }
+
+    /* Referencia: glosario y buenas prácticas */
+    .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+    .ref { position: relative; border-top: 4px solid var(--accent); padding: 30px 30px 26px; display: flex; flex-direction: column; gap: 14px;
+      background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 12%, transparent), var(--panel) 55%); }
+    .ref h2 { margin: 0; font-size: 1.8rem; }
+    .ref h2 a { color: inherit; text-decoration: none; }
+    .ref h2 a::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); }
+    .ref p { margin: 0; color: var(--muted); font-size: 1.02rem; }
+    .ref .kind { font-family: var(--mono); font-size: .8rem; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+    .ref .chips { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
+    .ref .chips a { font-size: .85rem; text-decoration: none; color: var(--text); border: 1px solid var(--line); background: #0006;
+      border-radius: 999px; padding: 4px 12px; transition: border-color .2s, background .2s; }
+    .ref .chips a:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, transparent); }
+    .ref .chips code { background: none; padding: 0; color: var(--accent); margin-right: 6px; font-size: .8rem; }
+    .ref .go { color: var(--accent); font-weight: 600; margin-top: auto; }
+    .ref:hover { border-color: var(--accent); }
+
+    /* Procesos */
+    .topic { text-decoration: none; color: inherit; display: block; transition: transform .2s, border-color .2s; border-top: 3px solid var(--accent); }
+    a.topic:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .tag { display: inline-block; font-family: var(--mono); font-size: .78rem; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent); border-radius: 999px; padding: 1px 10px; margin-bottom: 10px; }
+    .topic .go { display: inline-block; margin-top: 14px; color: var(--accent); font-weight: 600; }
+    .t-skills { --accent: var(--spec); } .t-specs { --accent: var(--test); } .t-journeys { --accent: var(--bugs); }
+    .r-glossary { --accent: var(--ok); } .r-practices { --accent: #f472b6; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html" aria-current="page">Testing Inteligente · Repaso</a>
+      <span class="menu"><a href="glosario.html">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" class="mono">journeys</a></span>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">Material de apoyo</span>
+      <h1>Repasa el curso</h1>
+      <p class="lead">Empieza por el glosario y las buenas prácticas de Playwright: son la referencia para escribir y revisar pruebas. Después, repasa los procesos del curso.</p>
+    </header>
+
+    <section>
+      <h2 class="section-title">Referencia <small>· para consultar siempre</small></h2>
+      <p class="section-intro">Los términos del curso y las reglas de una buena prueba. Pulsa un término o una práctica para ir directamente a ella.</p>
+      <div class="ref-grid">
+        <article class="card ref r-glossary">
+          <span class="kind">Glosario</span>
+          <h2><a href="glosario.html">Los conceptos del curso</a></h2>
+          <p>Spec, historia, requisito, escenario, test, suite y el resto de términos, con sus códigos y sus relaciones.</p>
+          <div class="chips">
+            <a href="glosario.html#spec"><code>S1</code>Spec</a>
+            <a href="glosario.html#story"><code>US1</code>Historia</a>
+            <a href="glosario.html#req"><code>R1</code>Requisito</a>
+            <a href="glosario.html#scenario">Escenario</a>
+            <a href="glosario.html#tag"><code>@S1-R1</code>Etiqueta</a>
+            <a href="glosario.html#locator">Localizador</a>
+            <a href="glosario.html#assertion">Aserción</a>
+            <a href="glosario.html#po">Page Object</a>
+            <a href="glosario.html#triage">Triage</a>
+          </div>
+          <span class="go">Abrir el glosario →</span>
+        </article>
+        <article class="card ref r-practices">
+          <span class="kind">Buenas prácticas de Playwright</span>
+          <h2><a href="practicas.html">Una prueba que puedes creer</a></h2>
+          <p>Una prueba anotada, ejemplos malos y buenos uno junto al otro, errores típicos de un agente y una lista para revisar.</p>
+          <div class="chips">
+            <a href="practicas.html#locators"><code>E2</code>Localiza como el usuario</a>
+            <a href="practicas.html#web-first"><code>E3</code>Aserciones que reintentan</a>
+            <a href="practicas.html#await"><code>E4</code>await en cada paso</a>
+            <a href="practicas.html#page-objects"><code>E6</code>Page Objects</a>
+            <a href="practicas.html#independent"><code>E7</code>Pruebas independientes</a>
+            <a href="practicas.html#evidence">Evidencias</a>
+          </div>
+          <span class="go">Abrir las buenas prácticas →</span>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Procesos <small>· cómo se trabaja con los agentes</small></h2>
+      <p class="section-intro">Tres páginas visuales: cómo trabajan las skills, cómo llega un requisito a su prueba y cómo se prueba un recorrido completo.</p>
+      <div class="grid grid-3">
+        <a class="card topic t-skills" href="orquestaciones.html">
+          <span class="tag">skills</span>
+          <h3>Orquestaciones y skills primitivas</h3>
+          <p>Qué tarea hace cada pipeline, qué skills invoca y qué resultado aporta cada una.</p>
+          <span class="go">Abrir →</span>
+        </a>
+        <a class="card topic t-specs" href="trazabilidad.html">
+          <span class="tag">specs</span>
+          <h3>De la spec a la prueba</h3>
+          <p>Cómo se organizan historias y requisitos, y cómo llega un requisito a su escenario y a su prueba.</p>
+          <span class="go">Abrir →</span>
+        </a>
+        <a class="card topic t-journeys" href="journeys.html">
+          <span class="tag">journeys</span>
+          <h3>Journeys</h3>
+          <p>Un recorrido de usuario paso a paso: qué cubren las pruebas y dónde se comprueba el resultado.</p>
+          <span class="go">Abrir →</span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
+      <div class="f-links">
+        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
+          <span class="f-kind">El curso</span>
+          <span class="f-title">Testing Inteligente en TrainingIT</span>
+          <span class="f-url">trainingit.es/producto/testing-ia →</span>
+        </a>
+        <a class="f-link f-author" href="https://albertobasalo.dev">
+          <span class="f-kind">El autor</span>
+          <span class="f-title">Alberto Basalo</span>
+          <span class="f-url">albertobasalo.dev →</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

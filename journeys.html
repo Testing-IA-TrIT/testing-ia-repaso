@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Journeys · Testing Inteligente</title>
+  <meta name="description" content="Repaso visual: un recorrido de usuario paso a paso, qué cubren las pruebas y dónde se comprueba el resultado esperado.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/journeys.css">
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar">
+      <a class="brand" href="index.html">Testing Inteligente · Repaso</a>
+      <span class="menu"><a href="glosario.html">Glosario</a><a href="practicas.html">Buenas prácticas</a><a href="orquestaciones.html" class="mono">skills</a><a href="trazabilidad.html" class="mono">specs</a><a href="journeys.html" aria-current="page" class="mono">journeys</a></span>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">journeys · Recorridos</span>
+      <h1>Las piezas y el camino</h1>
+      <p class="lead">
+        Las specs dicen que cada pieza funciona. Un journey dice que el usuario llega a su objetivo.
+        Atraviesa varias specs, no añade reglas y cada paso apunta a un criterio que ya existe.
+      </p>
+    </header>
+
+    <section class="reveal">
+      <h2>Dos preguntas distintas</h2>
+      <p class="intro">Una prueba de spec y un journey usan las mismas herramientas. Responden a preguntas distintas.</p>
+      <div class="vs">
+        <div class="card piece">
+          <h3>Prueba de spec</h3>
+          <p>Comprueba una pieza de la aplicación.</p>
+          <dl>
+            <dt>Pregunta</dt><dd>¿Se cumple la regla?</dd>
+            <dt>Sesión</dt><dd>Guardada: empieza ya dentro</dd>
+            <dt>Datos</dt><dd>La prueba los prepara</dd>
+            <dt>Comprueba</dt><dd>Cada criterio de una spec</dd>
+          </dl>
+        </div>
+        <div class="card path">
+          <h3>Journey</h3>
+          <p>Recorre el camino completo de un usuario.</p>
+          <dl>
+            <dt>Pregunta</dt><dd>¿El usuario consigue su objetivo?</dd>
+            <dt>Sesión</dt><dd>Ninguna: entra por la UI</dd>
+            <dt>Datos</dt><dd>El usuario los crea</dd>
+            <dt>Comprueba</dt><dd>Un resultado al final de cada paso</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2>El journey <code>J1</code> paso a paso</h2>
+      <p class="intro">
+        El operador entra, añade un cohete y programa un lanzamiento con ese cohete. Al final ve el lanzamiento en la lista.
+        Cada parada es un paso. Arriba está la acción del usuario; abajo, la comprobación ◆.
+      </p>
+      <div class="tools">
+        <button class="btn" id="run-btn" type="button">▶ Recorrer el journey</button>
+        <button class="btn bug" id="bug-btn" type="button" aria-pressed="false">✗ Aplicar el cambio del compañero</button>
+        <span class="status" id="status" aria-live="polite"></span>
+      </div>
+      <div class="board" id="board" aria-label="Estado de la suite"></div>
+      <div class="card">
+        <div class="ends">
+          <span>Empieza: <b>el operador, sin sesión</b></span>
+          <span>Objetivo: <b>los pasajeros pueden reservar</b></span>
+        </div>
+        <div class="metro" id="metro"></div>
+        <div class="lines">
+          <span style="--c: var(--s-access)"><i></i>S2 · Acceso</span>
+          <span style="--c: var(--s-rockets)"><i></i>S3 · Cohetes</span>
+          <span style="--c: var(--s-launches)"><i></i>S1 · Lanzamientos</span>
+          <span style="--c: var(--s-list)"><i></i>S4 · Lista de lanzamientos</span>
+        </div>
+      </div>
+      <div class="j-panel" id="j-panel" aria-live="polite"></div>
+    </section>
+
+    <section class="reveal">
+      <h2>Dónde se comprueba el resultado</h2>
+      <p class="intro">Un journey tiene un solo <code>.feature</code> y no tiene <code>spec.md</code>. Su prueba tiene un <code>test.step</code> por paso. Cada paso termina con un <code>expect</code>.</p>
+      <div class="code-pair">
+        <div class="card code-card">
+          <div class="file-name">specs/J1-operator-journey/J1-operator-journey.feature</div>
+<pre><span class="c"># Journey: J1 · Specs: S2, S3, S1, S4</span>
+<span class="t">@journey @J1</span>
+<span class="k">Feature:</span> [J1] El operador abre un lanzamiento
+
+  <span class="k">Scenario:</span> Programar un lanzamiento con un cohete nuevo
+    <span class="c"># S2-R7</span>
+    <span class="k">Given</span> el operador entra con su cuenta
+    <span class="c"># S3-R1</span>
+    <span class="k">When</span> añade un cohete nuevo
+    <span class="c"># S1-R1</span>
+    <span class="k">And</span> programa un lanzamiento con ese cohete
+    <span class="c"># S4-R1</span>
+    <span class="k">Then</span> ve el lanzamiento como «programado»</pre>
+        </div>
+        <div class="card code-card">
+          <div class="file-name">e2e/tests/J1-operator-journey/J1-operator-journey.test.ts</div>
+<pre><span class="k">test</span>.describe(<span class="s">'[J1] …'</span>, { tag: [<span class="t">'@journey'</span>, <span class="t">'@J1'</span>] }, () => {
+  <span class="k">test</span>.use({ storageState: { cookies: [], origins: [] } })
+
+  <span class="k">test</span>(<span class="s">'…'</span>, { tag: <span class="t">'@J1-1'</span> }, <span class="k">async</span> ({ page }) => {
+    <span class="k">await test</span>.step(<span class="s">'[S2-R7] Entrar'</span>, <span class="k">async</span> () => {
+      <span class="c">// formulario de login</span>
+      <span class="x">expect(menú).toContainText('operador')</span>
+    })
+    <span class="k">await test</span>.step(<span class="s">'[S3-R1] Añadir un cohete'</span>, …)
+    <span class="k">await test</span>.step(<span class="s">'[S1-R1] Programar un lanzamiento'</span>, …)
+    <span class="k">await test</span>.step(<span class="s">'[S4-R1] Ver el lanzamiento'</span>, …)
+  })
+})</pre>
+        </div>
+      </div>
+      <p class="code-note">La línea marcada como <span class="x">expect</span> es la comprobación del paso: solo el resultado que ve el usuario. El journey no comprueba otra vez todas las reglas de la spec. <code>storageState</code> vacío hace que empiece sin sesión.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>Las reglas de un journey</h2>
+      <div class="grid grid-3">
+        <div class="card rule"><span class="ico">🔗</span><h3>No añade reglas <code class="rc">E1.5</code></h3><p>Cada paso cita un criterio que existe, como <code>S3-R1</code>. Si un paso no tiene criterio, el agente para e informa del hueco. No lo inventa: propone una spec nueva.</p></div>
+        <div class="card rule"><span class="ico">🖱️</span><h3>Solo la UI <code class="rc">E8.5</code></h3><p>Todas las acciones y comprobaciones pasan por la interfaz. No usa la API ni las respuestas de la red.</p></div>
+        <div class="card rule"><span class="ico">🚪</span><h3>Empieza sin sesión <code class="rc">E8.9</code></h3><p>Entrar es el primer paso del journey. No reutiliza la sesión guardada de las pruebas de spec.</p></div>
+        <div class="card rule"><span class="ico">🆕</span><h3>Datos únicos <code class="rc">E8.8</code></h3><p>El usuario crea sus datos con nombres únicos. La semilla solo da la cuenta del actor.</p></div>
+        <div class="card rule"><span class="ico">◆</span><h3>Un resultado por paso <code class="rc">E8.4 · E8.7</code></h3><p>Cada <code>test.step</code> termina con lo que ve el usuario. Pocos escenarios, no uno por criterio.</p></div>
+        <div class="card rule"><span class="ico">🧰</span><h3>Las mismas skills</h3><p>No hay una skill nueva. <code>define-test</code> tiene un modo journey para los códigos <code>J</code>. Usas los mismos <a href="orquestaciones.html"><code>/test-builder</code> y <code>/bugs-hunter</code></a>.</p></div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <h2>Lo que cubre y lo que queda fuera</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>Cubre el journey J1</th><th>Queda fuera</th></tr></thead>
+          <tbody>
+            <tr><td>El operador entra, añade un cohete y programa un lanzamiento por la UI</td><td>El pasajero reserva su plaza: otro journey, que necesita una spec nueva</td></tr>
+            <tr><td>Los datos que crea un paso llegan al paso siguiente</td><td>Las reglas de cada spec: ya las comprueban sus pruebas</td></tr>
+            <tr><td>El recorrido empieza sin sesión</td><td>Un navegador real cerrado y abierto otra vez</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <blockquote class="quote">El journey se ejecuta con las specs en verde. Por eso su fallo suele estar entre dos specs, no dentro de una.</blockquote>
+      <p class="intro" style="margin-top:20px">Para pensar: ¿qué demuestra el journey que <b>no demuestran las specs</b>?</p>
+    </section>
+
+    <footer class="site-footer">
+      <p class="f-note">Material de repaso del curso <b>Testing Inteligente</b>.</p>
+      <div class="f-links">
+        <a class="f-link f-course" href="https://www.trainingit.es/producto/testing-ia/">
+          <span class="f-kind">El curso</span>
+          <span class="f-title">Testing Inteligente en TrainingIT</span>
+          <span class="f-url">trainingit.es/producto/testing-ia →</span>
+        </a>
+        <a class="f-link f-author" href="https://albertobasalo.dev">
+          <span class="f-kind">El autor</span>
+          <span class="f-title">Alberto Basalo</span>
+          <span class="f-url">albertobasalo.dev →</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/journeys.js"></script>
+</body>
+</html>

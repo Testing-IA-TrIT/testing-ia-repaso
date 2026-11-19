@@ -1,0 +1,205 @@
+// Datos y comportamiento del glosario.
+// Cada término tiene un grupo, una definición y términos relacionados (por id).
+
+const GROUPS = {
+  analisis: { name: "Análisis", color: "var(--spec)" },
+  escenarios: { name: "Escenarios", color: "#f472b6" },
+  pruebas: { name: "Pruebas", color: "var(--test)" },
+  agentes: { name: "Agentes", color: "var(--ok)" },
+  diagnostico: { name: "Diagnóstico", color: "var(--bugs)" },
+};
+
+const PAGES = {
+  orquestaciones: "skills · Orquestaciones",
+  trazabilidad: "specs · Trazabilidad",
+  journeys: "journeys · Recorridos",
+};
+
+const TERMS = [
+  // Análisis
+  { id: "spec", group: "analisis", term: "Spec", en: "Specification", code: "S1 · spec.md", page: "trazabilidad",
+    def: "Documento que describe una funcionalidad completa: qué debe hacer la aplicación, no cómo se prueba. Tiene un id y un slug. Contiene el problema, las historias, las reglas, la solución, los requisitos y lo que queda fuera de alcance.",
+    not: "El sufijo .spec.ts de Playwright. En el curso, los archivos de prueba usan .test.ts.",
+    rel: ["story", "req", "trace"] },
+  { id: "story", group: "analisis", term: "Historia de usuario", en: "User story", code: "US1", page: "trazabilidad",
+    def: "Lo que necesita un usuario, con su rol y su objetivo: «Como operador, quiero… para…». Una spec tiene de 1 a 3 historias. Cada historia tiene su archivo .feature.",
+    rel: ["spec", "req", "feature"] },
+  { id: "req", group: "analisis", term: "Requisito", en: "Requirement", code: "R1 (US1) · S1-R1", page: "trazabilidad",
+    def: "Criterio de verificación escrito con EARS. Pertenece a una sola historia y la nombra: R1 (US1). Una spec tiene de 1 a 9 requisitos en total. Fuera de su spec, se escribe con el id de la spec: S1-R1.",
+    not: "Una regla de negocio. La regla da contexto; solo se prueba si un requisito la recoge.",
+    rel: ["ears", "scenario", "tag", "rule"] },
+  { id: "ears", group: "analisis", term: "EARS", en: "Easy Approach to Requirements Syntax", code: "Cuando…, el sistema debe…",
+    def: "Plantilla para escribir requisitos que se pueden verificar: una condición o un disparador, y la respuesta del sistema. Ejemplo: «Si la fecha está en el pasado, entonces el sistema debe rechazar el lanzamiento».",
+    rel: ["req"] },
+  { id: "rule", group: "analisis", term: "Regla", en: "Business rule", code: "sin código",
+    def: "Restricción del negocio que da contexto, como «un cohete no puede tener dos lanzamientos a la vez». No tiene código y no genera una prueba. Si se debe comprobar, escríbela también como requisito EARS.",
+    rel: ["req", "spec"] },
+  { id: "journey", group: "analisis", term: "Journey", en: "User journey", code: "J1", page: "journeys",
+    def: "Objetivo completo de un usuario que atraviesa varias specs. No añade reglas: cada paso cita un criterio que ya existe. Tiene un solo .feature y no tiene spec.md. Empieza sin sesión y usa solo la UI.",
+    rel: ["step", "spec", "session"] },
+
+  // Escenarios
+  { id: "gherkin", group: "escenarios", term: "Gherkin", en: "Gherkin", code: "Feature · Scenario",
+    def: "Lenguaje para escribir ejemplos de comportamiento con palabras clave en inglés: Feature, Scenario, Given, When, Then. Lo leen las personas y los agentes.",
+    rel: ["feature", "gwt"] },
+  { id: "feature", group: "escenarios", term: "Feature", en: "Feature file", code: "US1-<slug>.feature", page: "trazabilidad",
+    def: "Archivo Gherkin con una historia. Contiene un escenario por cada requisito de esa historia. Está en la carpeta de la spec.",
+    not: "Otro nivel del análisis. Feature es la palabra clave de Gherkin: en el curso, un Feature contiene una historia.",
+    rel: ["story", "scenario", "gherkin"] },
+  { id: "scenario", group: "escenarios", term: "Escenario", en: "Scenario", code: "Scenario: [R1] …", page: "trazabilidad",
+    def: "Ejemplo concreto que demuestra un requisito. Hay un escenario por requisito y su título cita el código: [R1].",
+    rel: ["req", "test", "outline", "gwt"] },
+  { id: "outline", group: "escenarios", term: "Scenario Outline", en: "Scenario Outline", code: "Examples",
+    def: "Escenario con una tabla Examples, para un requisito que necesita varios ejemplos. Cada fila de la tabla genera un test. Todos llevan la misma etiqueta.",
+    rel: ["scenario", "test", "tag"] },
+  { id: "gwt", group: "escenarios", term: "Given / When / Then", en: "Steps", code: "Given · When · Then",
+    def: "Los pasos de un escenario: el estado inicial, la acción del usuario y el resultado esperado. En la prueba son los datos, las acciones y el expect.",
+    rel: ["scenario", "assertion", "data"] },
+
+  // Pruebas
+  { id: "e2e", group: "pruebas", term: "Prueba e2e", en: "End-to-end test", code: "e2e/tests/",
+    def: "Prueba que usa la aplicación como un usuario, a través del navegador, de principio a fin. La web es una caja negra: la prueba ve la interfaz y sus evidencias, no el código.",
+    rel: ["test", "locator", "suite"] },
+  { id: "test", group: "pruebas", term: "Test", en: "Test", code: "test('[R1] …')", page: "trazabilidad",
+    def: "Código que comprueba un escenario con Playwright. Su título empieza por el código del requisito y lleva su etiqueta. Está en un archivo .test.ts por historia.",
+    rel: ["scenario", "describe", "tag", "assertion"] },
+  { id: "describe", group: "pruebas", term: "test.describe", en: "Test group", code: "test.describe('[US1] …')",
+    def: "Grupo con los tests de una historia. Lleva las etiquetas de la spec y de la historia: @S1 y @S1-US1. Sus tests heredan esas etiquetas.",
+    rel: ["test", "story", "tag"] },
+  { id: "step", group: "pruebas", term: "test.step", en: "Test step", code: "test.step('[S3-R1] …')", page: "journeys",
+    def: "Paso con nombre dentro de un test. En un journey hay un test.step por paso; su título cita el criterio y termina con un expect.",
+    rel: ["journey", "test", "assertion"] },
+  { id: "tag", group: "pruebas", term: "Etiqueta", en: "Tag", code: "@S1-R1", page: "trazabilidad",
+    def: "Marca de un test que permite seleccionarlo al ejecutar: --grep '@S1-R1'. Lleva siempre el id de la spec delante, porque US1 y R1 se repiten en todas las specs.",
+    rel: ["test", "suite", "trace"] },
+  { id: "suite", group: "pruebas", term: "Suite", en: "Test suite", code: "npm run test:e2e",
+    def: "El conjunto de todas las pruebas e2e del proyecto. Ejecutar toda la suite tras un cambio descubre regresiones en otras specs.",
+    rel: ["test", "tag", "regression"] },
+  { id: "locator", group: "pruebas", term: "Localizador", en: "Locator", code: "getByRole(…)",
+    def: "Forma de encontrar un elemento como lo ve el usuario: por su rol, su etiqueta o su texto. Hace la prueba más estable que un selector CSS.",
+    rel: ["po", "assertion", "e2e"] },
+  { id: "assertion", group: "pruebas", term: "Aserción", en: "Assertion", code: "expect(…)",
+    def: "Comprobación del resultado esperado. Es el punto donde la prueba pasa o falla. Corresponde al Then del escenario.",
+    rel: ["gwt", "locator", "test"] },
+  { id: "po", group: "pruebas", term: "Page Object", en: "Page Object", code: "RocketsPage",
+    def: "Clase que agrupa los localizadores y las acciones de una página. Las pruebas la reutilizan y no repiten los detalles de la interfaz.",
+    rel: ["locator", "test"] },
+  { id: "data", group: "pruebas", term: "Datos de prueba", en: "Test data", code: "semilla · datos únicos",
+    def: "Entradas y resultados esperados, separados del código de la prueba. La semilla deja un estado conocido. Los datos únicos evitan que una prueba dependa de otra.",
+    rel: ["gwt", "test"] },
+  { id: "session", group: "pruebas", term: "Sesión guardada", en: "storageState", code: "storageState",
+    def: "Estado del navegador, con sus cookies y su localStorage, que Playwright guarda tras entrar una vez. Las pruebas de spec la reutilizan. Un journey empieza sin ella.",
+    rel: ["journey", "test"] },
+
+  // Agentes
+  { id: "skill", group: "agentes", term: "Skill primitiva", en: "Skill", code: "define-test", page: "orquestaciones",
+    def: "Carpeta con un SKILL.md que hace una sola tarea y entrega un resultado que puedes revisar. Su nombre tiene la forma verbo-objeto.",
+    rel: ["pipeline", "gate"] },
+  { id: "pipeline", group: "agentes", term: "Pipeline", en: "Pipeline", code: "test-builder", page: "orquestaciones",
+    def: "Skill que invoca skills primitivas en orden y para una vez para pedir tu aprobación. Su nombre tiene la forma objeto-rol. Empieza en una conversación nueva.",
+    rel: ["skill", "gate"] },
+  { id: "gate", group: "agentes", term: "Pausa humana", en: "Human approval", code: "🧑", page: "orquestaciones",
+    def: "Punto donde el pipeline para y pide tu decisión: aprobar la spec, los escenarios o el veredicto. Si no apruebas, pides cambios.",
+    rel: ["pipeline", "triage"] },
+
+  // Diagnóstico
+  { id: "report", group: "diagnostico", term: "Informe", en: "Report", code: "e2e-report.md",
+    def: "Resultado de ejecutar las pruebas de una spec o de un journey. Recoge cada fallo, también las regresiones, con sus evidencias en e2e-evidence/.",
+    rel: ["triage", "regression", "suite"] },
+  { id: "regression", group: "diagnostico", term: "Regresión", en: "Regression", code: "Regressions",
+    def: "Prueba que pasaba y falla después de un cambio, a menudo de otra spec. El informe la recoge en su sección Regressions.",
+    rel: ["suite", "report"] },
+  { id: "triage", group: "diagnostico", term: "Triage", en: "Triage", code: "triage-bugs",
+    def: "Decidir el origen de cada fallo: la aplicación, la prueba o el entorno. Compara hipótesis y cita la evidencia de cada decisión.",
+    rel: ["report", "fix", "gate"] },
+  { id: "fix", group: "diagnostico", term: "Spec de corrección", en: "Fix spec", code: "fix.spec.md",
+    def: "Documento con la causa y la corrección de los fallos, escrito tras aprobar el veredicto del triage. La skill fix-bugs la aplica.",
+    rel: ["triage", "spec"] },
+  { id: "trace", group: "diagnostico", term: "Trazabilidad", en: "Traceability", code: "R1 → [R1] → @S1-R1", page: "trazabilidad",
+    def: "Poder ir de un requisito a su prueba, y de una prueba que falla a su requisito. Funciona porque todos los niveles usan el mismo código.",
+    rel: ["req", "tag", "scenario"] },
+];
+
+const byId = Object.fromEntries(TERMS.map((t) => [t.id, t]));
+const grid = document.getElementById("terms");
+const search = document.getElementById("search");
+const filters = document.getElementById("filters");
+const count = document.getElementById("count");
+let group = "all";
+
+function el(tag, attrs = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(attrs)) {
+    if (key === "class") node.className = value;
+    else if (key === "text") node.textContent = value;
+    else if (key === "style") node.style.cssText = value;
+    else node.setAttribute(key, value);
+  }
+  for (const child of [].concat(children)) if (child != null) node.append(child);
+  return node;
+}
+
+function renderFilters() {
+  const make = (id, name, color) => {
+    const b = el("button", { class: "filter", type: "button", "aria-pressed": String(group === id), style: color ? `--c:${color}` : "" }, name);
+    b.addEventListener("click", () => { group = id; renderFilters(); apply(); });
+    return b;
+  };
+  filters.replaceChildren(make("all", "Todos"), ...Object.entries(GROUPS).map(([id, g]) => make(id, g.name, g.color)));
+}
+
+function renderTerms() {
+  for (const t of TERMS) {
+    const g = GROUPS[t.group];
+    const rel = el("div", { class: "rel" }, [el("small", { text: "Relacionados" }),
+      ...t.rel.map((id) => {
+        const b = el("button", { class: "rel-chip", type: "button", style: `--c:${GROUPS[byId[id].group].color}` }, byId[id].term);
+        b.addEventListener("click", () => jump(id));
+        return b;
+      })]);
+    const card = el("article", { class: "term", id: t.id, style: `--c:${g.color}`, "data-group": t.group }, [
+      el("div", { class: "term-head" }, [
+        el("h3", { text: t.term }),
+        el("span", { class: "grp", text: g.name }),
+      ]),
+      t.en !== t.term ? el("p", { class: "en", text: t.en }) : null,
+      el("code", { class: "term-code", text: t.code }),
+      el("p", { class: "def", text: t.def }),
+      t.not ? el("p", { class: "not" }, [el("b", { text: "No confundir con: " }), t.not]) : null,
+      rel,
+      t.page ? el("a", { class: "go", href: `${t.page}.html`, text: `Ver en ${PAGES[t.page]} →` }) : null,
+    ]);
+    t.node = card;
+    t.text = `${t.term} ${t.en} ${t.code} ${t.def}`.toLowerCase();
+    grid.append(card);
+  }
+}
+
+function apply() {
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  for (const t of TERMS) {
+    const ok = (group === "all" || t.group === group) && (!q || t.text.includes(q));
+    t.node.hidden = !ok;
+    if (ok) shown++;
+  }
+  count.textContent = `${shown} de ${TERMS.length} términos`;
+}
+
+function jump(id) {
+  const t = byId[id];
+  if (!t) return;
+  if (t.node.hidden) { search.value = ""; group = "all"; renderFilters(); apply(); }
+  t.node.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  t.node.classList.remove("flash");
+  void t.node.offsetWidth; // reinicia la animación
+  t.node.classList.add("flash");
+  history.replaceState(null, "", `#${id}`);
+}
+
+renderFilters();
+renderTerms();
+apply();
+search.addEventListener("input", apply);
+document.querySelectorAll("[data-jump]").forEach((b) => b.addEventListener("click", () => jump(b.dataset.jump)));
+if (location.hash) setTimeout(() => jump(location.hash.slice(1)), 100);

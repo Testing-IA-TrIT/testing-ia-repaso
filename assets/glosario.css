@@ -1,0 +1,62 @@
+/* Estilos propios del glosario */
+
+/* Cómo encajan los conceptos */
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; }
+.chain .node {
+  font: inherit; cursor: pointer; color: var(--text);
+  background: var(--bg-2); border: 1.5px solid var(--c); border-radius: 12px;
+  padding: 10px 14px; text-align: center; line-height: 1.25;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.chain .node:hover, .chain .node:focus-visible { transform: translateY(-3px); box-shadow: 0 8px 22px -8px var(--c); outline: none; }
+.chain .node b { display: block; }
+.chain .node code { background: none; padding: 0; font-size: 0.78rem; color: var(--c); }
+.chain .verb { font-size: 0.78rem; color: var(--muted); text-align: center; line-height: 1.2; }
+.chain .verb::after { content: "→"; display: block; font-size: 1.1rem; color: var(--text); }
+.chain-note { margin: 16px 0 0; color: var(--muted); font-size: 0.92rem; }
+
+/* Buscador y filtros */
+.finder { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 22px; position: sticky; top: var(--topbar-h); z-index: 5; padding: 12px 0; background: linear-gradient(var(--bg) 70%, transparent); }
+.finder input {
+  flex: 1 1 260px; font: inherit; color: var(--text);
+  background: var(--bg-2); border: 1.5px solid var(--line); border-radius: 999px;
+  padding: 10px 18px;
+}
+.finder input:focus { outline: none; border-color: var(--test); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter {
+  font: inherit; font-size: 0.88rem; cursor: pointer; color: var(--text);
+  border: 1.5px solid var(--c, var(--line)); background: transparent; border-radius: 999px; padding: 6px 14px;
+}
+.filter[aria-pressed="true"] { background: color-mix(in srgb, var(--c, var(--text)) 24%, transparent); }
+.count { color: var(--muted); font-size: 0.85rem; }
+
+/* Tarjetas de término */
+.terms { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.term {
+  background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--c);
+  border-radius: var(--radius); padding: 20px 22px;
+  display: flex; flex-direction: column; gap: 8px;
+  scroll-margin: 120px;
+}
+.term[hidden] { display: none; }
+.term-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.term h3 { margin: 0; font-size: 1.2rem; }
+.grp { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c); white-space: nowrap; }
+.en { margin: -6px 0 0; font-size: 0.85rem; color: var(--muted); font-style: italic; }
+.term-code { align-self: flex-start; color: var(--c); }
+.def { margin: 0; font-size: 0.94rem; }
+.not { margin: 0; font-size: 0.86rem; color: var(--muted); border-left: 2px solid var(--gate); padding-left: 10px; }
+.not b { color: var(--gate); font-weight: 600; }
+.rel { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: auto; padding-top: 6px; }
+.rel small { width: 100%; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.rel-chip {
+  font: inherit; font-size: 0.8rem; cursor: pointer; color: var(--text);
+  background: transparent; border: 1px solid color-mix(in srgb, var(--c) 60%, transparent); border-radius: 999px; padding: 2px 10px;
+}
+.rel-chip:hover { background: color-mix(in srgb, var(--c) 20%, transparent); }
+.term .go { font-size: 0.85rem; color: var(--c); text-decoration: none; font-weight: 600; }
+.term .go:hover { text-decoration: underline; }
+.term.flash { animation: flash 1.2s ease; }
+
+@keyframes flash { 0%, 40% { box-shadow: 0 0 0 4px var(--c); } 100% { box-shadow: none; } }

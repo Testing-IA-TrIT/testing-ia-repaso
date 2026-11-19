@@ -1,0 +1,105 @@
+/* Estilos propios de la página de buenas prácticas */
+
+/* Prueba anotada */
+.anatomy-wrap { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 20px; align-items: start; }
+.anatomy { padding: 0; overflow: hidden; }
+.anatomy .file-name { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); padding: 12px 18px; border-bottom: 1px solid var(--line); }
+.anatomy pre { margin: 0; padding: 14px 0; font-family: var(--mono); font-size: 0.82rem; line-height: 1.75; overflow-x: auto; }
+.anatomy .ln { display: block; padding: 0 18px 0 14px; border-left: 3px solid transparent; transition: background 0.2s, border-color 0.2s; white-space: pre; }
+.anatomy .ln.lit { background: color-mix(in srgb, var(--test) 16%, transparent); border-left-color: var(--test); }
+.marker {
+  font: inherit; font-family: var(--sans); font-size: 0.7rem; font-weight: 700; cursor: pointer;
+  width: 20px; height: 20px; border-radius: 50%; padding: 0; margin-left: 10px; vertical-align: middle;
+  border: none; background: var(--test); color: var(--bg);
+}
+.marker:hover { transform: scale(1.15); }
+.anatomy .k { color: #f472b6; }
+.anatomy .s { color: #86efac; }
+.anatomy .c { color: var(--muted); }
+
+.anatomy-legend { display: flex; flex-direction: column; gap: 8px; }
+.anatomy-legend button {
+  font: inherit; color: var(--text); cursor: pointer; text-align: left;
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.anatomy-legend button.lit, .anatomy-legend button:hover { border-color: var(--test); background: color-mix(in srgb, var(--test) 10%, transparent); }
+.anatomy-legend .n {
+  flex: 0 0 22px; height: 22px; border-radius: 50%; background: var(--test); color: var(--bg);
+  display: grid; place-items: center; font-size: 0.75rem; font-weight: 700;
+}
+.anatomy-legend b { display: block; font-size: 0.92rem; }
+.anatomy-legend span.t { font-size: 0.82rem; color: var(--muted); }
+
+/* Grupos de prácticas */
+.p-group { margin-bottom: 36px; }
+.g-title { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; margin: 0 0 14px; }
+.g-title small { color: var(--muted); font-weight: 400; }
+.g-title .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); }
+.p-list { display: flex; flex-direction: column; gap: 18px; }
+
+/* Una práctica por fila, a todo el ancho */
+.practice {
+  background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--c);
+  border-radius: var(--radius); padding: 22px 26px;
+  display: flex; flex-direction: column; gap: 14px;
+  scroll-margin: 100px;
+}
+.practice h4 { margin: 0; font-size: 1.2rem; }
+.p-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.p-text { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 12px 28px; align-items: start; }
+.rc { font-family: var(--mono); font-size: 0.75rem; font-weight: 500; white-space: nowrap; color: var(--c, var(--test)); background: color-mix(in srgb, var(--c, var(--test)) 14%, transparent); border-radius: 6px; padding: 1px 7px; margin-right: 8px; }
+.p-head .rc, .anatomy-legend .rc { margin-right: 0; }
+.codes-note { color: var(--muted); font-size: 0.9rem; margin: -14px 0 24px; }
+.practice .why { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.practice .rule { margin: 0; font-size: 0.93rem; border-left: 2px solid var(--c); padding-left: 12px; }
+.practice .rule b { color: var(--c); }
+.practice.flash { animation: flash 1.2s ease; }
+
+/* Mal y Bien, visibles a la vez */
+.p-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.p-compare.stacked { grid-template-columns: 1fr; }
+.p-ex { margin: 0; display: flex; flex-direction: column; min-width: 0; }
+.p-ex figcaption { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; padding: 4px 12px; border-radius: 10px 10px 0 0; align-self: flex-start; }
+.p-ex.bad figcaption { color: var(--gate); background: color-mix(in srgb, var(--gate) 16%, transparent); }
+.p-ex.good figcaption { color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
+
+.p-code {
+  flex: 1; margin: 0; padding: 14px 16px; border-radius: 0 10px 10px 10px;
+  background: #000a; border: 1px solid var(--line); border-left: 3px solid var(--ok);
+  font-family: var(--mono); font-size: 0.85rem; line-height: 1.65; overflow-x: auto; white-space: pre;
+}
+.p-ex.bad .p-code { border-left-color: var(--gate); }
+.p-code .k { color: #f472b6; }
+.p-code .s { color: #86efac; }
+.p-code .c { color: var(--muted); }
+.practice .gl { align-self: flex-start; font-size: 0.85rem; color: var(--c); text-decoration: none; font-weight: 600; }
+.practice .gl:hover { text-decoration: underline; }
+
+/* Errores típicos de un agente */
+.traps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.trap { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--gate); border-radius: 12px; padding: 14px 16px; }
+.trap b { display: block; margin-bottom: 4px; }
+.trap span { color: var(--muted); font-size: 0.9rem; }
+.trap a { color: var(--gate); font-size: 0.85rem; text-decoration: none; }
+
+/* Lista de comprobación */
+.check-card { max-width: 760px; }
+.progress { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; margin: 6px 0 4px; }
+.progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--test), var(--ok)); transition: width 0.4s ease; }
+.progress-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: var(--muted); font-size: 0.88rem; margin-bottom: 14px; }
+.progress-row button { font: inherit; font-size: 0.82rem; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.checklist { list-style: none; margin: 0; padding: 0; }
+.checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.checklist input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--ok); flex: 0 0 auto; }
+.checklist label { cursor: pointer; }
+.checklist input:checked + label { color: var(--muted); text-decoration: line-through; text-decoration-color: #fff4; }
+
+@keyframes flash { 0%, 40% { box-shadow: 0 0 0 4px var(--c); } 100% { box-shadow: none; } }
+
+@media (max-width: 860px) {
+  .anatomy-wrap { grid-template-columns: 1fr; }
+  .p-text, .p-compare { grid-template-columns: 1fr; }
+  .practice { padding: 18px; }
+}
